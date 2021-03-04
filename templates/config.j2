@@ -1,0 +1,81 @@
+net:
+  bindIp: {{ mongodb_net_bindip }}
+{% if mongodb_server_version is version("3.6", "<") %}
+  http:
+    enabled: {{ mongodb_net_http_enabled | lower }}
+{% endif %}
+  ipv6: {{ mongodb_net_ipv6 | lower }}
+  maxIncomingConnections: {{ mongodb_net_maxconns }}
+  port: {{ mongodb_net_port }}
+
+processManagement:
+  fork: false
+{% if mongodb_pidfile_path | default(False) %}
+  pidFilePath: {{ mongodb_pidfile_path }}
+{% endif %}
+{% if mongodb_server_version is version("3.4", ">") %}
+  timeZoneInfo: /usr/share/zoneinfo
+{% endif %}
+{% if mongodb_replication_replset | default(False) %}
+
+replication:
+  oplogSizeMB: {{ mongodb_replication_oplogsize | int }}
+  replSetName: {{ mongodb_replication_replset }}
+  enableMajorityReadConcern: {{ mongodb_replication_enable_majority_read_concern | lower }}
+{% if mongodb_storage_engine == 'mmapv1' %}
+  secondaryIndexPrefetch: {{ mongodb_replication_replindexprefetch }}
+{% endif %}
+{% endif %}
+
+security:
+  authorization: {{ mongodb_security_authorization }}
+{% if mongodb_replication_replset | default(False) and mongodb_security_authorization == 'enabled' %}
+  keyFile: {{ mongodb_keyfile_path }}
+{% endif %}
+  javascriptEnabled: {{ mongodb_security_javascript_enabled | lower }}
+
+storage:
+  dbPath: {{ mongodb_storage_path }}
+  directoryPerDB: {{ mongodb_storage_dirperdb | lower }}
+  engine: {{ mongodb_storage_engine }}
+  journal:
+    enabled: {{ mongodb_storage_journal_enabled | lower }}
+{% if mongodb_storage_engine == 'mmapv1' %}
+  mmapv1:
+    quota:
+      enforced: {{ mongodb_storage_quota_enforced | lower }}
+      maxFilesPerDB: {{ mongodb_storage_quota_maxfiles }}
+    smallFiles: {{ mongodb_storage_smallfiles | lower }}
+{% endif %}
+{% if mongodb_storage_engine == 'wiredTiger' %}
+  wiredTiger:
+    engineConfig:
+{% if mongodb_wiredtiger_cache_size | default(False) %}
+      cacheSizeGB: {{ mongodb_wiredtiger_cache_size }}
+{% endif %}
+      directoryForIndexes: {{ mongodb_wiredtiger_directory_for_indexes | lower }}
+{% endif %}
+
+systemLog:
+  destination: file
+  logAppend: {{ mongodb_systemlog_logappend | lower }}
+  logRotate: {{ mongodb_systemlog_logrotate }}
+  path: {{ mongodb_systemlog_path }}
+
+operationProfiling:
+  slowOpThresholdMs: {{ mongodb_operation_profiling_slow_op_threshold_ms }}
+  mode: {{ mongodb_operation_profiling_mode }}
+{% if mongodb_server_version is version("4.0", ">=") %}
+
+cloud:
+  monitoring:
+    free:
+      state: {{ mongodb_cloud_monitoring_free_state }}
+{% endif %}
+{% if mongodb_set_parameters | default(False) %}
+
+setParameter:
+{% for key, value in mongodb_set_parameters.items() %}
+  {{ key }}: {{ value }}
+{% endfor %}
+{% endif %}

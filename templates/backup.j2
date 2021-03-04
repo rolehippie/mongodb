@@ -1,0 +1,43 @@
+#!/bin/bash
+
+PARENT_DIRECORY="{{ mongodb_backup_path }}"
+CURRENT_TIMESTAMP=$(date +"{{ mongodb_backup_formatting }}")
+BACKUP_RETENTION="{{ mongodb_backup_retention }}"
+BACKUP_DIRECTORY="${PARENT_DIRECORY}/${CURRENT_TIMESTAMP}"
+MONGO_ARGS="--username {{ mongodb_root_admin_username }} --password {{ mongodb_root_admin_password }} --authenticationDatabase admin"
+
+if [ ! -d ${BACKUP_DIRECTORY} ]; then
+    mkdir -p ${BACKUP_DIRECTORY}
+    chmod u=rwx,g=rwx,o= ${BACKUP_DIRECTORY}
+fi
+
+find ${PARENT_DIRECORY} \
+    -mindepth 1 \
+    -maxdepth 1 \
+    -type d \
+    -ctime ${BACKUP_RETENTION} \
+    -exec rm -rf {} \;
+
+DATABASES=$(mongo ${MONGO_ARGS} --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true } ))' | jq -r .databases[].name | grep -v -E "{{ mongodb_backup_ignore }}")
+
+if [ "${DATABASES}" == "" ]; then
+    echo "Found no databases..."
+    exit
+fi
+
+for DATABASE in ${DATABASES}
+do
+    echo "Starting backup for ${DATABASE}..."
+    START=$(date +%s)
+    mongodump ${MONGO_ARGS} --db ${DATABASE} --out ${BACKUP_DIRECTORY} --gzip
+    ENDS=$(date +%s)
+    echo "Done within $((${ENDS}-${START}))s"
+done
+{% if mongodb_backup_addition_script | default(False) %}
+
+echo "Executing additional scripts..."
+START=$(date +%s)
+{{ mongodb_backup_addition_script | trim }}
+ENDS=$(date +%s)
+echo "Done within $((${ENDS}-${START}))s"
+{% endif %}

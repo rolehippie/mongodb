@@ -1,0 +1,21 @@
+# Standards: 1.2
+---
+- name: Reload mongodb
+  systemd:
+    name: mongod
+    state: reloaded
+    daemon_reload: True
+
+- name: Restart mongodb
+  systemd:
+    name: mongod
+    state: restarted
+    daemon_reload: True
+
+- name: Restart mongodb-exporter
+  systemd:
+    name: mongod
+    state: restarted
+    daemon_reload: True
+
+...

@@ -1,0 +1,11 @@
+[Unit]
+Description=Prometheus exporter for MongoDB
+After=network-online.target
+
+[Service]
+Restart=always
+EnvironmentFile=/etc/default/mongodb-exporter
+ExecStart=/usr/bin/mongodb-exporter $ARGS
+
+[Install]
+WantedBy=multi-user.target

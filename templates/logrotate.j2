@@ -1,0 +1,13 @@
+{{ mongodb_systemlog_path }} {
+	rotate 14
+	daily
+	missingok
+	notifempty
+	compress
+	delaycompress
+	sharedscripts
+	create 640 mongodb mongodb
+	postrotate
+		kill -SIGUSR1 `cat /run/mongodb/mongod.pid 2>/dev/null` >/dev/null 2>&1
+	endscript
+}

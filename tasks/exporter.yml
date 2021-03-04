@@ -1,0 +1,95 @@
+# Standards: 1.2
+---
+- name: Check existing install
+  register: mongodb_exporter_version_check
+  failed_when: False
+  changed_when: False
+  check_mode: False
+  command: /usr/bin/mongodb-exporter --version
+  tags:
+    - mongodb
+    - mongodb-exporter
+
+- name: Fact version change
+  set_fact:
+    mongodb_exporter_version_changed: "{{ mongodb_exporter_version_check.rc != 0 or (mongodb_exporter_version_check.stderr_lines is defined and mongodb_exporter_version not in mongodb_exporter_version_check.stderr_lines[0]) }}"
+  tags:
+    - mongodb
+    - mongodb-exporter
+
+- name: Create install directory
+  when: mongodb_exporter_version_changed
+  file:
+    path: /usr/local/src/mongodb-exporter
+    state: directory
+  tags:
+    - mongodb
+    - mongodb-exporter
+
+- name: Download release tarball
+  when: mongodb_exporter_version_changed
+  unarchive:
+    src: "{{ mongodb_exporter_download }}"
+    dest: /usr/local/src/mongodb-exporter
+    remote_src: True
+    owner: root
+    group: root
+  tags:
+    - mongodb
+    - mongodb-exporter
+
+- name: Copy exporter binary
+  when: mongodb_exporter_version_changed and not ansible_check_mode
+  notify:
+    - Restart mongodb-exporter
+  copy:
+    src: /usr/local/src/mongodb-exporter/mongodb_exporter
+    dest: /usr/bin/mongodb-exporter
+    remote_src: True
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  tags:
+    - mongodb
+    - mongodb-exporter
+
+- name: Write default config
+  notify:
+    - Restart mongodb-exporter
+  template:
+    src: exporter/default.j2
+    dest: /etc/default/mongodb-exporter
+  tags:
+    - mongodb
+    - mongodb-exporter
+
+- name: Write service file
+  notify:
+    - Restart mongodb-exporter
+  template:
+    src: exporter/service.j2
+    dest: /etc/systemd/system/mongodb-exporter.service
+  tags:
+    - mongodb
+    - mongodb-exporter
+
+- name: Start mongodb-exporter service
+  systemd:
+    name: mongodb-exporter
+    state: "{{ 'started' if mongodb_exporter_enabled else 'stopped' }}"
+    daemon_reload: True
+    masked: False
+    enabled: "{{ True if mongodb_exporter_enabled else False }}"
+  tags:
+    - mongodb
+    - mongodb-exporter
+
+- name: Remove install directory
+  file:
+    path: /usr/local/src/mongodb-exporter
+    state: absent
+  tags:
+    - mongodb
+    - mongodb-exporter
+
+...

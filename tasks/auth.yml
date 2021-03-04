@@ -1,0 +1,66 @@
+# Standards: 1.2
+---
+- name: Replace mongod config
+  notify:
+    - Restart mongodb
+  diff: False
+  template:
+    src: init.j2
+    dest: /etc/mongod.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - mongodb
+
+- name: Replace handlers flush
+  meta: flush_handlers
+
+- name: Wait after replace
+  wait_for:
+    host: localhost
+    port: "{{ mongodb_net_port }}"
+    delay: 5
+    timeout: 120
+  tags:
+    - mongodb
+
+- name: Create root user
+  # no_log: True
+  ignore_errors: "{{ ansible_check_mode }}"
+  mongodb_user:
+    database: admin
+    name: "{{ mongodb_root_admin_username }}"
+    password: "{{ mongodb_root_admin_password }}"
+    update_password: "{{ mongodb_root_update_password }}"
+    roles: root
+    login_port: "{{ mongodb_net_port | string }}"
+  tags:
+    - mongodb
+
+- name: Revert mongod config
+  notify:
+    - Restart mongodb
+  diff: False
+  template:
+    src: config.j2
+    dest: /etc/mongod.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - mongodb
+
+- name: Revert handlers flush
+  meta: flush_handlers
+
+- name: Wait after revert
+  wait_for:
+    host: localhost
+    port: "{{ mongodb_net_port }}"
+    delay: 5
+    timeout: 120
+  tags:
+    - mongodb
+
+...

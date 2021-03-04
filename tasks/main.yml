@@ -1,0 +1,347 @@
+# Standards: 1.2
+---
+- name: Create required group
+  group:
+    name: "{{ mongodb_group }}"
+    system: True
+    state: present
+  tags:
+    - mongodb
+
+- name: Create required user
+  user:
+    name: "{{ mongodb_user }}"
+    group: "{{ mongodb_group }}"
+    password: "!"
+    shell: /usr/sbin/nologin
+    home: /var/lib/mongodb
+    create_home: False
+    system: True
+    state: present
+  tags:
+    - mongodb
+
+- name: Download repo key
+  apt_key:
+    url: "https://www.mongodb.org/static/pgp/server-{{ mongodb_server_version }}.asc"
+    id: "{{ mongodb_apt_key_id[mongodb_server_version] }}"
+    state: present
+  tags:
+    - mongodb
+
+- name: Add apt repository
+  apt_repository:
+    repo: "{{ mongodb_repository[mongodb_server_version] }}"
+    filename: mongodb
+    update_cache: True
+    state: present
+  tags:
+    - mongodb
+
+- name: Install required packages
+  loop:
+    - mongodb-org
+    - numactl
+    - python3-pip
+  package:
+    name: "{{ item }}"
+    state: present
+  tags:
+    - mongodb
+
+- name: Install pymongo pip
+  pip:
+    name: pymongo
+    state: "{{ mongodb_pymongo_version is defined | ternary('present', 'latest') }}"
+    version: "{{ mongodb_pymongo_version | default(omit) }}"
+  tags:
+    - mongodb
+
+- name: Create data directory
+  file:
+    path: "{{ mongodb_storage_path }}"
+    owner: "{{ mongodb_user }}"
+    group: "{{ mongodb_user }}"
+    mode: u=rwX,g=rX,o=
+    state: directory
+  tags:
+    - mongodb
+
+- name: Enforce data ownership
+  file:
+    path: "{{ mongodb_storage_path }}"
+    owner: "{{ mongodb_user }}"
+    group: "{{ mongodb_user }}"
+    recurse: "{{ mongodb_recursive_enforce_owner }}"
+    follow: True
+    mode: u=rwX,g=rX,o=
+  tags:
+    - mongodb
+
+- name: Create log directory
+  file:
+    dest: "{{ mongodb_systemlog_path | dirname }}"
+    owner: "{{ mongodb_user }}"
+    group: "{{ mongodb_user }}"
+    recurse: True
+    mode: u=rwx,g=rx,o=rx
+    state: directory
+  tags:
+    - mongodb
+
+- name: Create log file
+  copy:
+    content: ""
+    dest: "{{ mongodb_systemlog_path }}"
+    owner: "{{ mongodb_user }}"
+    group: "{{ mongodb_user }}"
+    force: False
+    mode: u=rw,g=r,o=
+  tags:
+    - mongodb
+
+- name: Create logrotate config
+  template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/mongodb
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - mongodb
+
+- name: Write tmpfiles config
+  copy:
+    content: "d {{ mongodb_pidfile_path | dirname }} 0755 {{ mongodb_user }} {{ mongodb_group }} -"
+    dest: /etc/tmpfiles.d/mongodb.conf
+  tags:
+    - mongodb
+
+- name: Create tmpfiles dir
+  file:
+    path: "{{ mongodb_pidfile_path | dirname }}"
+    owner: "{{ mongodb_user }}"
+    group: "{{ mongodb_group }}"
+    mode: u=rwx,g=rx,o=rx
+    state: directory
+  tags:
+    - mongodb
+
+- name: Cron env variables
+  cron:
+    cron_file: mongodb
+    name: PATH
+    env: True
+    job: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/X11R6/bin
+    user: root
+    state: present
+  tags:
+    - mongodb
+
+- name: Write readahead service
+  template:
+    src: readahead/service.j2
+    dest: /etc/systemd/system/mongod-readahead.service
+  tags:
+    - mongodb
+
+- name: Write readahead script
+  template:
+    src: readahead/script.j2
+    dest: /usr/local/bin/mongod-readahead
+    owner: root
+    group: root
+    mode: u=rwx,g=r,o=r
+  tags:
+    - mongodb
+
+- name: Cron readahead script
+  cron:
+    name: readahead
+    cron_file: mongodb
+    minute: "*/5"
+    hour: "*"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: /usr/bin/cronic /usr/local/bin/mongod-readahead
+    user: root
+    state: present
+  tags:
+    - mongodb
+
+- name: Write mongod config
+  notify:
+    - Restart mongodb
+  template:
+    src: config.j2
+    dest: /etc/mongod.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - mongodb
+
+- name: Write default config
+  notify:
+    - Restart mongodb
+  template:
+    src: default.j2
+    dest: /etc/default/mongod
+  tags:
+    - mongodb
+
+- name: Write service file
+  notify:
+    - Restart mongodb
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/mongod.service
+  tags:
+    - mongodb
+
+- name: Write secret key
+  when: mongodb_replication_replset | default(False)
+  copy:
+    content: "{{ mongodb_keyfile_content }}"
+    dest: "{{ mongodb_keyfile_path }}"
+    owner: "{{ mongodb_user }}"
+    group: root
+    mode: u=rw,g=,o=
+  tags:
+    - mongodb
+
+- name: Start mongod service
+  systemd:
+    name: mongod
+    state: started
+    daemon_reload: True
+    masked: False
+    enabled: True
+  tags:
+    - mongodb
+
+- name: Write backup script
+  when: mongodb_backup_enabled
+  template:
+    src: backup.j2
+    dest: /usr/local/bin/mongodb-backup
+    owner: root
+    group: root
+    mode: u=rwx,g=rwx,o=
+  tags:
+    - mongodb
+
+- name: Remove backup script
+  when: not mongodb_backup_enabled
+  file:
+    path: /usr/local/bin/mongodb-backup
+    state: absent
+  tags:
+    - mongodb
+
+- name: Create backup cronjobs
+  cron:
+    name: mongodb backup
+    special_time: "{{ mongodb_backup_cron }}"
+    job: /usr/bin/cronic /usr/local/bin/mongodb-backup
+    state: "{{ 'present' if mongodb_backup_enabled else 'absent' }}"
+  tags:
+    - mongodb
+
+- name: Postinstall handlers flush
+  meta: flush_handlers
+
+- name: Include replset config
+  when:
+    - mongodb_master_node == inventory_hostname
+  include: replset.yml
+  tags:
+    - mongodb
+
+- name: Create admin user
+  when:
+    - mongodb_security_authorization == 'enabled'
+    - mongodb_master_node == inventory_hostname
+  # no_log: True
+  ignore_errors: "{{ ansible_check_mode }}"
+  mongodb_user:
+    database: admin
+    name: "{{ mongodb_user_admin_username }}"
+    password: "{{ mongodb_user_admin_password }}"
+    update_password: "{{ mongodb_admin_update_password }}"
+    roles: userAdminAnyDatabase
+    login_port: "{{ mongodb_net_port | string }}"
+  tags:
+    - mongodb
+
+- name: Create metrics user
+  when:
+    - mongodb_security_authorization == 'enabled'
+    - mongodb_master_node == inventory_hostname
+  # no_log: True
+  ignore_errors: "{{ ansible_check_mode }}"
+  mongodb_user:
+    database: admin
+    name: "{{ mongodb_metrics_username }}"
+    password: "{{ mongodb_metrics_password }}"
+    update_password: "{{ mongodb_metrics_update_password }}"
+    roles: clusterMonitor
+    login_port: "{{ mongodb_net_port | string }}"
+  tags:
+    - mongodb
+
+- name: Create oplog user
+  loop: "{{ mongodb_oplog_users }}"
+  loop_control:
+    label: "{{ item.username }}"
+  when:
+    - mongodb_security_authorization == 'enabled'
+    - mongodb_master_node == inventory_hostname
+  # no_log: True
+  ignore_errors: "{{ ansible_check_mode }}"
+  mongodb_user:
+    login_host: "{{ mongodb_master_node | default('localhost') }}"
+    login_port: "{{ mongodb_net_port | default(27017) }}"
+    login_user: "{{ mongodb_user_admin_username }}"
+    login_password: "{{ mongodb_user_admin_password }}"
+    database: admin
+    user: "{{ item.username }}"
+    password: "{{ item.password }}"
+    update_password: "{{ item.update_password | default(mongodb_user_update_password) }}"
+    roles:
+      - db: local
+        role: read
+  tags:
+    - mongodb
+
+- name: Create cluster users
+  loop: "{{ mongodb_general_users + mongodb_extra_users }}"
+  loop_control:
+    label: "{{ item.username }}"
+  when:
+    - mongodb_security_authorization == 'enabled'
+    - mongodb_master_node == inventory_hostname
+  # no_log: True
+  ignore_errors: "{{ ansible_check_mode }}"
+  mongodb_user:
+    login_host: "{{ mongodb_master_node | default('localhost') }}"
+    login_port: "{{ mongodb_net_port | default(27017) }}"
+    login_user: "{{ mongodb_user_admin_username }}"
+    login_password: "{{ mongodb_user_admin_password }}"
+    database: "{{ item.database }}"
+    name: "{{ item.username }}"
+    password: "{{ item.password }}"
+    update_password: "{{ item.update_password | default(mongodb_user_update_password) }}"
+    roles: "{{ item.roles }}"
+  tags:
+    - mongodb
+
+- name: Include exporter tasks
+  when: mongodb_exporter_enabled | default(False)
+  include: exporter.yml
+  tags:
+    - mongodb
+    - mongodb-exporter
+
+...

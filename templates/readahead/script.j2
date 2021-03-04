@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+{% if mongodb_volumes | default(False) %}
+if mongo --eval 'db.runCommand("ping")' --quiet >/dev/null 2>&1; then
+{% for item in mongodb_volumes %}
+    blockdev --setra 32 {{ item }}
+{% endfor %}
+fi
+{% endif %}

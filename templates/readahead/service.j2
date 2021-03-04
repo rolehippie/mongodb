@@ -1,0 +1,13 @@
+[Unit]
+Description=MongoDB readahead tweaking
+
+[Service]
+Type=oneshot
+
+{% for item in mongodb_volumes %}
+ExecStartPre=/sbin/blockdev --setra 512 {{ item }}
+{% endfor %}
+ExecStart=/bin/true
+
+[Install]
+WantedBy=multi-user.target mongod.service

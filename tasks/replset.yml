@@ -1,0 +1,73 @@
+# Standards: 1.2
+---
+- name: Check admin access
+  when:
+    - mongodb_security_authorization == 'enabled'
+  register: mongodb_user_admin_check
+  changed_when: mongodb_user_admin_check.rc != 0
+  failed_when: False
+  check_mode: False
+  ignore_errors: True
+  command: >
+    mongo --quiet
+      --username {{ mongodb_root_admin_username }}
+      --password {{ mongodb_root_admin_password }}
+      --authenticationDatabase admin
+      --port {{ mongodb_net_port }}
+      --eval 'db.version()'
+  tags:
+    - mongodb
+
+- name: Include auth configuration
+  when:
+    - mongodb_security_authorization == 'enabled'
+    - mongodb_user_admin_check.rc != 0
+  include: auth.yml
+  tags:
+    - mongodb
+
+- name: Authenticated replset init
+  when:
+    - mongodb_security_authorization == 'enabled'
+  loop: "{{ mongodb_replication_params | default([]) }}"
+  loop_control:
+    label: "{{ item.host }}"
+  mongodb_replication:
+    login_host: "{{ mongodb_master_node | default('localhost') }}"
+    login_port: "{{ mongodb_net_port | default(27017) }}"
+    login_user: "{{ mongodb_root_admin_username }}"
+    login_password: "{{ mongodb_root_admin_password }}"
+    replica_set: "{{ mongodb_replication_replset }}"
+    build_indexes: "{{ item.build_indexes | default(omit) }}"
+    host_name: "{{ item.host }}"
+    host_port: "{{ item.port | default(27017) }}"
+    host_type: "{{ item.type | default('replica') }}"
+    hidden: "{{ item.hidden | default(False) }}"
+    priority: "{{ item.priority | default(1.0) }}"
+    votes: "{{ item.votes | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+  tags:
+    - mongodb
+
+- name: Anonymous replset init
+  when:
+    - mongodb_security_authorization != 'enabled'
+  loop: "{{ mongodb_replication_params | default([]) }}"
+  loop_control:
+    label: "{{ item.host }}"
+  mongodb_replication:
+    login_host: "{{ mongodb_master_node | default('localhost') }}"
+    login_port: "{{ mongodb_net_port | default(27017) }}"
+    replica_set: "{{ mongodb_replication_replset }}"
+    build_indexes: "{{ item.build_indexes | default(omit) }}"
+    host_name: "{{ item.host }}"
+    host_port: "{{ item.port | default(27017) }}"
+    host_type: "{{ item.type | default('replica') }}"
+    hidden: "{{ item.hidden | default(False) }}"
+    priority: "{{ item.priority | default(1.0) }}"
+    votes: "{{ item.votes | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+  tags:
+    - mongodb
+
+...

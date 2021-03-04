@@ -1,0 +1,301 @@
+# Standards: 1.2
+---
+# @var mongodb_server_version:description: Version of MongoDB that gets installed
+mongodb_server_version: "4.0"
+
+# @var mongodb_server_version:description: Version of pymongo installed via pip
+mongodb_pymongo_version: latest
+
+# @var mongodb_limit_files:description: Limit for open files for the mongod service
+mongodb_limit_files: 1048576
+
+# @var mongodb_limit_procs:description: Limit for processes for the mongod service
+mongodb_limit_procs: 524288
+
+# @var mongodb_server_version:description: Where do you want to bind mongod to
+mongodb_net_bindip: 127.0.0.1
+
+# @var mongodb_server_version:description: Specify the port number to listen to
+mongodb_net_port: 27017
+
+# @var mongodb_net_http_enabled:description: Enable HTTP interface
+mongodb_net_http_enabled: False
+
+# @var mongodb_net_ipv6:description: Enable IPv6 support
+mongodb_net_ipv6: False
+
+# @var mongodb_net_maxconns:description: Max number of simultaneous connections
+mongodb_net_maxconns: 51200
+
+# @var mongodb_user_update_password:description: Define when user admin password should be changed
+mongodb_user_update_password: on_create
+
+# @var mongodb_root_update_password:description: Define when root admin password should be changed
+mongodb_root_update_password: always
+
+# @var mongodb_metrics_username:description: Username for the root admin
+mongodb_root_admin_username: root
+
+# @var mongodb_metrics_username:description: Password for the root admin
+mongodb_root_admin_password: p455w0rd
+
+# @var mongodb_admin_update_password:description: Define when root admin password should be changed
+mongodb_admin_update_password: always
+
+# @var mongodb_metrics_username:description: Username for the user admin
+mongodb_user_admin_username: siteUserAdmin
+
+# @var mongodb_metrics_username:description: Password for the user admin
+mongodb_user_admin_password: p455w0rd
+
+# @var mongodb_metrics_update_password:description: Define when metrics user password should be changed
+mongodb_metrics_update_password: always
+
+# @var mongodb_metrics_username:description: Username used for metrics exports
+mongodb_metrics_username: metrics
+
+# @var mongodb_metrics_password:description: Password used for metrics exports
+mongodb_metrics_password: p455w0rd
+
+# @var mongodb_volumes:description: List of volumes/disks used to store the data tweaked by blockdev
+mongodb_volumes: []
+
+# @var mongodb_oplog_users:description: List of oplog users to create
+# @var mongodb_oplog_users:example: >
+# mongodb_oplog_users:
+#   - username: oplog1
+#     password: p455w0rd
+#   - username: oplog2
+#     password: p455w0rd
+#     update_password: on_create
+# @end
+mongodb_oplog_users: []
+
+# @var mongodb_general_users:description: List of general users to create
+# @var mongodb_general_users:example: >
+# mongodb_general_users:
+#   - username: username1
+#     password: p455w0rd
+#     roles: userAdminAnyDatabase
+#   - username: username2
+#     password: p455w0rd
+#     roles:
+#       - db: cool-app
+#         role: read
+#     update_password: on_create
+# @end
+mongodb_general_users: []
+
+# @var mongodb_extra_users:description: List of extra users to create
+# @var mongodb_extra_users:example: >
+# mongodb_extra_users:
+#   - username: username1
+#     password: p455w0rd
+#     roles: userAdminAnyDatabase
+#   - username: username2
+#     password: p455w0rd
+#     roles:
+#       - db: cool-app
+#         role: read
+#     update_password: on_create
+# @end
+mongodb_extra_users: []
+
+# @var mongodb_keyfile_path:description: Path to store the keyfile content
+mongodb_keyfile_path: /etc/mongod.key
+
+# @var mongodb_keyfile_content:description: Key for inter-process auth, generate it with "openssl rand -base64 741"
+mongodb_keyfile_content: |
+  dtHmRo7L02cY5WnMl/mrn6mjLkXpepzV39VQzulNJyglcYu9XW+tph8uI/dku082
+  IPf0tGttUb9KiogspyOyzVk+T1r3apLIGktu6YycdyHMqAzVrsS08cb7VecbcUKW
+  aODcxfRUYUGWCYjjVl8jm2x25hR4otakdHhxYi/B3eFEu2zWxvX3zgq78U0djQbl
+  qp9I7uyCsireT5SNj/A0H5QoCN6zMb7stNveas8W0N6+HfFVBD5brvVXGf5Td9Bz
+  EZ6e/69c7OtaNvbxEZP2SpkyZb7m0Q5vWs+YZyFWw7u9SBGXkUwTPVmVl0JLgHxA
+  ADOS2lYUdQCWTS1WT3D4nqfFn6xGikC6HK9SYVp5RG0EkRGRDJ9YiFa7lYRQmzJC
+  D+y2QECYXGT3pjl0u8B4AW8YgBkzcPCdD86PaZFxbycg6bvgSiwTJ/VfROnQ8crA
+  tBuYdy0r5fqshT7VOPw7dezhYjFiUYv2IspVGTB87ZkQxJ4GhKQIZB/31Rz216X7
+  944M6o7priJwWy9rJGk9YwSA18RoTlYNTXCdXQiUNmQl6Qd/zIVNDJ+cu1c7CwgF
+  zv//L5yDdTeP5YYEPf0DHW7gX2OGfdLjgkvXibpPPll3D6p5kwvRIcyOvVaCapSH
+  XJwrLJOidIjGC3UDS3+e17lNHHrw+/0ppYqh/0kfAMyZ2Si77T4jL5U3vSl3xAou
+  FFCMWXCyNE5/sngFIn5PDWZssQbel7mI5x9i4EZxreaSry0BUJK2ZUbPLGdW6F+I
+  tZiel1zZrVHPce+BAJCsjOIxB8jlnEd3FTjhgm8fDIrWCuRCdQ6hBL7KluqZBU/g
+  6tp4/YjUC98GNQK4w52+8BzU07b/OM54JB6Q+fPhQc1VK9S4sUnG5YoB+NN426ji
+  Hj5YyWm1PLtbeXqSATUEuUR47KGnJxt5YZn0wnOPhEvTWZw+X0EfDahOj5HllSli
+  Y9dhyzeXLgAay/bKLUNaudEMNQYh
+
+# @var mongodb_security_authorization:description: Disable or enable security
+mongodb_security_authorization: disabled
+
+# @var mongodb_security_javascript_enabled:description: Enable javascript integration
+mongodb_security_javascript_enabled: False
+
+# @var mongodb_master_node:description: Define the inventory name of the master node, used for users and replset init
+mongodb_master_node:
+
+# @var mongodb_replication_replset:description: Enable replication in the form of <setname>[/<optionalseedhostlist>]
+mongodb_replication_replset:
+
+# @var mongodb_replication_replindexprefetch:description: Specify index prefetching behavior if secondary like none, _id_only, all
+mongodb_replication_replindexprefetch: all
+
+# @var mongodb_replication_oplogsize:description: Specifies a maximum size in megabytes for the replication operation log
+mongodb_replication_oplogsize: 1024
+
+# @var mongodb_replication_enable_majority_read_concern:description: Enable or disable majority read concern, should be false for PSA
+mongodb_replication_enable_majority_read_concern: True
+
+# @var mongodb_replication_params:description: Replication host configuration or parameters
+# @var mongodb_replication_params:example: >
+# mongodb_replication_params:
+#   - host_name: mongo-01,
+#     host_port: "{{ mongodb_net_port }}"
+#     host_type: replica
+#   - host_name: mongo-02
+#     host_port: "{{ mongodb_net_port }}"
+#     host_type: replica
+#   - host_name: mongo-03
+#     host_port: "{{ mongodb_net_port }}"
+#     host_type: replica
+# @end
+mongodb_replication_params:
+
+# @var mongodb_recursive_enforce_owner:description: Enforce recursively data ownership
+mongodb_recursive_enforce_owner: False
+
+# @var mongodb_systemlog_path:description: Path to the logging file
+mongodb_systemlog_path: /var/log/mongodb/mongod.log
+
+# @var mongodb_systemlog_logappend:description: Append to the logging file
+mongodb_systemlog_logappend: True
+
+# @var mongodb_systemlog_logrotate:description: Mechanism to rotate the log file
+mongodb_systemlog_logrotate: reopen
+
+# @var mongodb_systemlog_logrotate:description: Path to the database storage directory
+mongodb_storage_path: /var/lib/mongodb
+
+# @var mongodb_systemlog_logrotate:description: Define the used storage engine
+mongodb_storage_engine: wiredTiger
+
+# @var mongodb_storage_dirperdb:description: Use one directory per database
+mongodb_storage_dirperdb: False
+
+# @var mongodb_storage_journal_enabled:description: Enable journaling
+mongodb_storage_journal_enabled: True
+
+# @var mongodb_storage_quota_enforced:description: Limit each database to a certain number of files
+mongodb_storage_quota_enforced: False
+
+# @var mongodb_storage_quota_maxfiles:description: Number of quota files per database
+mongodb_storage_quota_maxfiles: 8
+
+# @var mongodb_storage_smallfiles:description: Very useful for non-data nodes
+mongodb_storage_smallfiles: False
+
+# @var mongodb_pidfile_path:description: Path to the pid file
+mongodb_pidfile_path: /run/mongodb/mongod.pid
+
+# @var mongodb_wiredtiger_cache_size:description: Cache size for wiredtiger cache size
+mongodb_wiredtiger_cache_size:
+
+# @var mongodb_wiredtiger_directory_for_indexes:description: Directory per index for wiredtiger engine
+mongodb_wiredtiger_directory_for_indexes: True
+
+# @var mongodb_operation_profiling_slow_op_threshold_ms:description: Profiling slow operations threshold in ms
+mongodb_operation_profiling_slow_op_threshold_ms: 100
+
+# @var mongodb_operation_profiling_mode:description: Mode for operation profiling
+mongodb_operation_profiling_mode: "off"
+
+# @var mongodb_cloud_monitoring_free_state:description: Cloud monitoring free state
+mongodb_cloud_monitoring_free_state: "off"
+
+# @var mongodb_cloud_monitoring_free_state:description: Define parameters for mongod config
+# @var mongodb_set_parameters:example: >
+# mongodb_set_parameters:
+#   enableLocalhostAuthBypass: "true"
+#   authenticationMechanisms: SCRAM-SHA-1,MONGODB-CR
+# @end
+mongodb_set_parameters: {}
+
+# @var mongodb_group:description: Name of the group owning MongoDB
+mongodb_group: mongodb
+
+# @var mongodb_user:description: Name of the user owning MongoDB
+mongodb_user: mongodb
+
+# @var mongodb_apt_key_id:description: Dict of GPG key IDs matching the choosen version
+mongodb_apt_key_id:
+  "3.4": "0C49F3730359A14518585931BC711F9BA15703C6"
+  "3.6": "2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5"
+  "4.0": "9DA31620334BD75D9DCB49F368818C72E52529D4"
+  "4.2": "E162F504A20CDF15827F718D4B7C549A058F8B6B"
+  "4.4": "20691EEC35216C63CAF66CE1656408E390CFB1F5"
+
+# @var mongodb_repository:description: Dict of repositories matching the choosen version
+mongodb_repository:
+  "3.4": "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/3.4 multiverse"
+  "3.6": "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/3.6 multiverse"
+  "4.0": "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/4.0 multiverse"
+  "4.2": "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/4.2 multiverse"
+  "4.4": "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/4.4 multiverse"
+
+# @var mongodb_backup_enabled:description: Enable or disable the backup script
+mongodb_backup_enabled: False
+
+# @var mongodb_backup_path:description: Path to store the backups
+mongodb_backup_path: "{{ mongodb_storage_path }}/_backup"
+
+# @var mongodb_backup_retention:description: Retention period to keep backups
+mongodb_backup_retention: +7
+
+# @var mongodb_backup_addition_script:description: Additional commands at the end of the script
+mongodb_backup_addition_script:
+
+# @var mongodb_backup_cron:description: A simple cron timing definition like hourly, daily or weekly
+mongodb_backup_cron: daily
+
+# @var mongodb_backup_ignore:description: Ignoring this filter via grep on database selection
+mongodb_backup_ignore: (admin|local)
+
+# @var mongodb_backup_formatting:description: Date format for the backup folder name
+mongodb_backup_formatting: "%F"
+
+# @var mongodb_exporter_enabled:description: Enable the mongodb exporter
+mongodb_exporter_enabled: True
+
+# @var mongodb_exporter_version:description: Version of the release to install
+mongodb_exporter_version: 0.10.0
+
+# @var mongodb_exporter_download:description: URL to the archive of the release to install
+mongodb_exporter_download: "https://github.com/percona/mongodb_exporter/releases/download/v{{ mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64.tar.gz"
+
+# @var mongodb_exporter_connection:description: Connection URI to access the MongoDB
+# @var mongodb_exporter_connection:example: $ "mongodb://localhost:27017"
+mongodb_exporter_connection: mongodb://{% if mongodb_security_authorization == 'enabled' %}{{ mongodb_metrics_username }}:{{ mongodb_metrics_password }}@{% endif %}localhost:27017
+
+# @var mongodb_exporter_username:description: Username to secure the metrics endpoint
+mongodb_exporter_username:
+
+# @var mongodb_exporter_username:description: Password to secure the metrics endpoint
+mongodb_exporter_password:
+
+# @var mongodb_exporter_collect_database:description: Enable collector for databases
+mongodb_exporter_collect_database: True
+
+# @var mongodb_exporter_collect_collection:description: Enable collector for collections
+mongodb_exporter_collect_collection: False
+
+# @var mongodb_exporter_collect_topmetrics:description: Enable collector for top metrics
+mongodb_exporter_collect_topmetrics: True
+
+# @var mongodb_exporter_collect_indexusage:description: Enable collector for index usage
+mongodb_exporter_collect_indexusage: False
+
+# @var mongodb_exporter_collect_connpoolstats:description: Enable collector for conn pool stats
+mongodb_exporter_collect_connpoolstats: True
+
+# @var mongodb_exporter_args:description: List of arguments joined for the executable
+mongodb_exporter_args: []
+
+...

@@ -1,0 +1,46 @@
+net:
+  bindIp: 127.0.0.1
+{% if mongodb_server_version is version("3.6", "<") %}
+  http:
+    enabled: {{ mongodb_net_http_enabled | lower }}
+{% endif %}
+  ipv6: {{ mongodb_net_ipv6 | lower }}
+  maxIncomingConnections: {{ mongodb_net_maxconns }}
+  port: {{ mongodb_net_port }}
+
+processManagement:
+  fork: false
+{% if mongodb_pidfile_path | default(False) %}
+  pidFilePath: {{ mongodb_pidfile_path }}
+{% endif %}
+
+security:
+  authorization: disabled
+
+storage:
+  dbPath: {{ mongodb_storage_path }}
+  directoryPerDB: {{ mongodb_storage_dirperdb | lower }}
+  engine: {{ mongodb_storage_engine }}
+  journal:
+    enabled: {{ mongodb_storage_journal_enabled | lower }}
+{% if mongodb_storage_engine == 'mmapv1' %}
+  mmapv1:
+    quota:
+      enforced: {{ mongodb_storage_quota_enforced | lower }}
+      maxFilesPerDB: {{ mongodb_storage_quota_maxfiles }}
+    smallFiles: {{ mongodb_storage_smallfiles | lower }}
+{% endif %}
+{% if mongodb_storage_engine == 'wiredTiger' %}
+  wiredTiger:
+    engineConfig:
+{% if mongodb_wiredtiger_cache_size | default(False) %}
+      cacheSizeGB: {{ mongodb_wiredtiger_cache_size }}
+{% endif %}
+      directoryForIndexes: {{ mongodb_wiredtiger_directory_for_indexes | lower }}
+{% endif %}
+
+systemLog:
+  destination: file
+  logAppend: {{ mongodb_systemlog_logappend | lower }}
+  logRotate: {{ mongodb_systemlog_logrotate }}
+  path: {{ mongodb_systemlog_path }}

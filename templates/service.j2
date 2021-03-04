@@ -1,0 +1,25 @@
+[Unit]
+Description=MongoDB Database Server
+
+After=network.target
+Requires=mongod-readahead.service
+
+[Service]
+User={{ mongodb_user }}
+Group={{ mongodb_group }}
+
+TasksMax=infinity
+LimitFSIZE=infinity
+LimitCPU=infinity
+LimitAS=infinity
+LimitMEMLOCK=infinity
+LimitNOFILE={{ mongodb_limit_files }}
+LimitNPROC={{ mongodb_limit_procs }}
+TasksAccounting=false
+
+EnvironmentFile=/etc/default/mongod
+ExecStart=/usr/bin/numactl --interleave=all /usr/bin/mongod --config /etc/mongod.conf
+PIDFile={{ mongodb_pidfile_path }}
+
+[Install]
+WantedBy=multi-user.target
