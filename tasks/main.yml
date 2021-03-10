@@ -266,12 +266,15 @@
   # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
   mongodb_user:
+    login_host: "{{ mongodb_master_node | default('localhost') }}"
+    login_port: "{{ mongodb_net_port | default(27017) }}"
+    login_user: "{{ mongodb_root_admin_username }}"
+    login_password: "{{ mongodb_root_admin_password }}"
     database: admin
     name: "{{ mongodb_user_admin_username }}"
     password: "{{ mongodb_user_admin_password }}"
     update_password: "{{ mongodb_admin_update_password }}"
     roles: userAdminAnyDatabase
-    login_port: "{{ mongodb_net_port | string }}"
   tags:
     - mongodb
 
@@ -282,12 +285,15 @@
   # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
   mongodb_user:
+    login_host: "{{ mongodb_master_node | default('localhost') }}"
+    login_port: "{{ mongodb_net_port | default(27017) }}"
+    login_user: "{{ mongodb_root_admin_username }}"
+    login_password: "{{ mongodb_root_admin_password }}"
     database: admin
     name: "{{ mongodb_metrics_username }}"
     password: "{{ mongodb_metrics_password }}"
     update_password: "{{ mongodb_metrics_update_password }}"
     roles: clusterMonitor
-    login_port: "{{ mongodb_net_port | string }}"
   tags:
     - mongodb
 
