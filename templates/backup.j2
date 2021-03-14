@@ -29,7 +29,7 @@ for DATABASE in ${DATABASES}
 do
     echo "Starting backup for ${DATABASE}..."
     START=$(date +%s)
-    mongodump ${MONGO_ARGS} --db ${DATABASE} --out ${BACKUP_DIRECTORY} --gzip
+    mongodump ${MONGO_ARGS} --db ${DATABASE} --out ${BACKUP_DIRECTORY} --gzip 2>&1
     ENDS=$(date +%s)
     echo "Done within $((${ENDS}-${START}))s"
 done
