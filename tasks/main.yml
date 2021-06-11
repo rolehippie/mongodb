@@ -96,7 +96,7 @@
     owner: "{{ mongodb_user }}"
     group: "{{ mongodb_user }}"
     force: False
-    mode: u=rw,g=r,o=
+    mode: u=rwx,g=rx,o=rx
   tags:
     - mongodb
 
