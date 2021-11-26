@@ -265,6 +265,7 @@ mongodb_backup_formatting: "%F"
 mongodb_exporter_enabled: True
 
 # @var mongodb_exporter_version:description: Version of the release to install
+# renovate: datasource=github-releases depName=percona/mongodb_exporter
 mongodb_exporter_version: 0.10.0
 
 # @var mongodb_exporter_download:description: URL to the archive of the release to install
