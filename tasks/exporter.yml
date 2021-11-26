@@ -5,14 +5,14 @@
   failed_when: False
   changed_when: False
   check_mode: False
-  command: /usr/bin/mongodb-exporter --version
+  shell: /usr/bin/mongodb-exporter --version  2>&1
   tags:
     - mongodb
     - mongodb-exporter
 
 - name: Fact version change
   set_fact:
-    mongodb_exporter_version_changed: "{{ mongodb_exporter_version_check.rc != 0 or (mongodb_exporter_version_check.stderr_lines is defined and mongodb_exporter_version not in mongodb_exporter_version_check.stderr_lines[0]) }}"
+    mongodb_exporter_version_changed: "{{ mongodb_exporter_version_check.rc != 0 or (mongodb_exporter_version_check.stdout_lines is defined and mongodb_exporter_version not in mongodb_exporter_version_check.stdout_lines[0]) }}"
   tags:
     - mongodb
     - mongodb-exporter
