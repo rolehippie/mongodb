@@ -20,6 +20,8 @@
 # [rolehippie.docker](https://github.com/rolehippie/docker)
 # @end
 galaxy_info:
+  role_name: mongodb
+  namespace: rolehippie
   author: Thomas Boerger
   description: Ansible role to install and configure a MongoDB object/document-oriented database
   license: Apache-2.0

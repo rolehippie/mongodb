@@ -255,7 +255,7 @@
 - name: Include replset config
   when:
     - mongodb_master_node == inventory_hostname
-  include: replset.yml
+  include_tasks: replset.yml
   tags:
     - mongodb
 
@@ -345,7 +345,7 @@
 
 - name: Include exporter tasks
   when: mongodb_exporter_enabled | default(False)
-  include: exporter.yml
+  include_tasks: exporter.yml
   tags:
     - mongodb
     - mongodb-exporter

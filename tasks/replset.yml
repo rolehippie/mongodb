@@ -22,7 +22,7 @@
   when:
     - mongodb_security_authorization == 'enabled'
     - mongodb_user_admin_check.rc != 0
-  include: auth.yml
+  include_tasks: auth.yml
   tags:
     - mongodb
 
