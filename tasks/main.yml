@@ -251,6 +251,8 @@
 
 - name: Postinstall handlers flush
   meta: flush_handlers
+  tags:
+    - mongodb
 
 - name: Include replset config
   when:

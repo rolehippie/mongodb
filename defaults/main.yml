@@ -4,7 +4,7 @@
 mongodb_server_version: "4.0"
 
 # @var mongodb_server_version:description: Version of pymongo installed via pip
-mongodb_pymongo_version: latest
+mongodb_pymongo_version: 3.12.3
 
 # @var mongodb_limit_files:description: Limit for open files for the mongod service
 mongodb_limit_files: 1048576
