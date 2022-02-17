@@ -576,7 +576,7 @@ mongodb_pidfile_path: /run/mongodb/mongod.pid
 #### Default value
 
 ```YAML
-mongodb_pymongo_version: latest
+mongodb_pymongo_version: 3.12.3
 ```
 
 ### mongodb_recursive_enforce_owner
