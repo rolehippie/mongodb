@@ -1,96 +1,97 @@
 # mongodb
 
-[![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/mongodb) [![Testing Build](https://github.com/rolehippie/mongodb/workflows/testing/badge.svg)](https://github.com/rolehippie/mongodb/actions?query=workflow%3Atesting) [![Readme Build](https://github.com/rolehippie/mongodb/workflows/readme/badge.svg)](https://github.com/rolehippie/mongodb/actions?query=workflow%3Areadme) [![Galaxy Build](https://github.com/rolehippie/mongodb/workflows/galaxy/badge.svg)](https://github.com/rolehippie/mongodb/actions?query=workflow%3Agalaxy) [![License: Apache-2.0](https://img.shields.io/github/license/rolehippie/mongodb)](https://github.com/rolehippie/mongodb/blob/master/LICENSE) 
+[![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/mongodb) [![Testing Build](https://github.com/rolehippie/mongodb/workflows/testing/badge.svg)](https://github.com/rolehippie/mongodb/actions?query=workflow%3Atesting) [![Readme Build](https://github.com/rolehippie/mongodb/workflows/readme/badge.svg)](https://github.com/rolehippie/mongodb/actions?query=workflow%3Areadme) [![Galaxy Build](https://github.com/rolehippie/mongodb/workflows/galaxy/badge.svg)](https://github.com/rolehippie/mongodb/actions?query=workflow%3Agalaxy) [![License: Apache-2.0](https://img.shields.io/github/license/rolehippie/mongodb)](https://github.com/rolehippie/mongodb/blob/master/LICENSE)
 
-Ansible role to install and configure a MongoDB object/document-oriented database. 
+Ansible role to install and configure a MongoDB object/document-oriented database.
 
-## Sponsor 
+## Sponsor
 
-[![Proact Deutschland GmbH](https://proact.eu/wp-content/uploads/2020/03/proact-logo.png)](https://proact.eu) 
+[![Proact Deutschland GmbH](https://proact.eu/wp-content/uploads/2020/03/proact-logo.png)](https://proact.eu)
 
 Building and improving this Ansible role have been sponsored by my employer **Proact Deutschland GmbH**.
 
 ## Table of content
 
-* [Default Variables](#default-variables)
-  * [mongodb_admin_update_password](#mongodb_admin_update_password)
-  * [mongodb_apt_key_id](#mongodb_apt_key_id)
-  * [mongodb_backup_addition_script](#mongodb_backup_addition_script)
-  * [mongodb_backup_cron](#mongodb_backup_cron)
-  * [mongodb_backup_enabled](#mongodb_backup_enabled)
-  * [mongodb_backup_formatting](#mongodb_backup_formatting)
-  * [mongodb_backup_ignore](#mongodb_backup_ignore)
-  * [mongodb_backup_path](#mongodb_backup_path)
-  * [mongodb_backup_retention](#mongodb_backup_retention)
-  * [mongodb_cloud_monitoring_free_state](#mongodb_cloud_monitoring_free_state)
-  * [mongodb_exporter_args](#mongodb_exporter_args)
-  * [mongodb_exporter_collect_collection](#mongodb_exporter_collect_collection)
-  * [mongodb_exporter_collect_connpoolstats](#mongodb_exporter_collect_connpoolstats)
-  * [mongodb_exporter_collect_database](#mongodb_exporter_collect_database)
-  * [mongodb_exporter_collect_indexusage](#mongodb_exporter_collect_indexusage)
-  * [mongodb_exporter_collect_topmetrics](#mongodb_exporter_collect_topmetrics)
-  * [mongodb_exporter_connection](#mongodb_exporter_connection)
-  * [mongodb_exporter_download](#mongodb_exporter_download)
-  * [mongodb_exporter_enabled](#mongodb_exporter_enabled)
-  * [mongodb_exporter_password](#mongodb_exporter_password)
-  * [mongodb_exporter_username](#mongodb_exporter_username)
-  * [mongodb_exporter_version](#mongodb_exporter_version)
-  * [mongodb_extra_users](#mongodb_extra_users)
-  * [mongodb_general_users](#mongodb_general_users)
-  * [mongodb_group](#mongodb_group)
-  * [mongodb_keyfile_content](#mongodb_keyfile_content)
-  * [mongodb_keyfile_path](#mongodb_keyfile_path)
-  * [mongodb_limit_files](#mongodb_limit_files)
-  * [mongodb_limit_procs](#mongodb_limit_procs)
-  * [mongodb_logrotate_retention](#mongodb_logrotate_retention)
-  * [mongodb_master_node](#mongodb_master_node)
-  * [mongodb_metrics_password](#mongodb_metrics_password)
-  * [mongodb_metrics_update_password](#mongodb_metrics_update_password)
-  * [mongodb_metrics_username](#mongodb_metrics_username)
-  * [mongodb_net_bindip](#mongodb_net_bindip)
-  * [mongodb_net_http_enabled](#mongodb_net_http_enabled)
-  * [mongodb_net_ipv6](#mongodb_net_ipv6)
-  * [mongodb_net_maxconns](#mongodb_net_maxconns)
-  * [mongodb_net_port](#mongodb_net_port)
-  * [mongodb_operation_profiling_mode](#mongodb_operation_profiling_mode)
-  * [mongodb_operation_profiling_slow_op_threshold_ms](#mongodb_operation_profiling_slow_op_threshold_ms)
-  * [mongodb_oplog_users](#mongodb_oplog_users)
-  * [mongodb_pidfile_path](#mongodb_pidfile_path)
-  * [mongodb_pymongo_version](#mongodb_pymongo_version)
-  * [mongodb_recursive_enforce_owner](#mongodb_recursive_enforce_owner)
-  * [mongodb_replication_enable_majority_read_concern](#mongodb_replication_enable_majority_read_concern)
-  * [mongodb_replication_oplogsize](#mongodb_replication_oplogsize)
-  * [mongodb_replication_params](#mongodb_replication_params)
-  * [mongodb_replication_replindexprefetch](#mongodb_replication_replindexprefetch)
-  * [mongodb_replication_replset](#mongodb_replication_replset)
-  * [mongodb_repository](#mongodb_repository)
-  * [mongodb_root_admin_password](#mongodb_root_admin_password)
-  * [mongodb_root_admin_username](#mongodb_root_admin_username)
-  * [mongodb_root_update_password](#mongodb_root_update_password)
-  * [mongodb_security_authorization](#mongodb_security_authorization)
-  * [mongodb_security_javascript_enabled](#mongodb_security_javascript_enabled)
-  * [mongodb_server_version](#mongodb_server_version)
-  * [mongodb_set_parameters](#mongodb_set_parameters)
-  * [mongodb_storage_dirperdb](#mongodb_storage_dirperdb)
-  * [mongodb_storage_engine](#mongodb_storage_engine)
-  * [mongodb_storage_journal_enabled](#mongodb_storage_journal_enabled)
-  * [mongodb_storage_path](#mongodb_storage_path)
-  * [mongodb_storage_quota_enforced](#mongodb_storage_quota_enforced)
-  * [mongodb_storage_quota_maxfiles](#mongodb_storage_quota_maxfiles)
-  * [mongodb_storage_smallfiles](#mongodb_storage_smallfiles)
-  * [mongodb_systemlog_logappend](#mongodb_systemlog_logappend)
-  * [mongodb_systemlog_logrotate](#mongodb_systemlog_logrotate)
-  * [mongodb_systemlog_path](#mongodb_systemlog_path)
-  * [mongodb_user](#mongodb_user)
-  * [mongodb_user_admin_password](#mongodb_user_admin_password)
-  * [mongodb_user_admin_username](#mongodb_user_admin_username)
-  * [mongodb_user_update_password](#mongodb_user_update_password)
-  * [mongodb_volumes](#mongodb_volumes)
-  * [mongodb_wiredtiger_cache_size](#mongodb_wiredtiger_cache_size)
-  * [mongodb_wiredtiger_directory_for_indexes](#mongodb_wiredtiger_directory_for_indexes)
-* [Dependencies](#dependencies)
-* [License](#license)
-* [Author](#author)
+- [Default Variables](#default-variables)
+  - [mongodb_admin_update_password](#mongodb_admin_update_password)
+  - [mongodb_apt_key_id](#mongodb_apt_key_id)
+  - [mongodb_backup_addition_script](#mongodb_backup_addition_script)
+  - [mongodb_backup_cron](#mongodb_backup_cron)
+  - [mongodb_backup_enabled](#mongodb_backup_enabled)
+  - [mongodb_backup_formatting](#mongodb_backup_formatting)
+  - [mongodb_backup_ignore](#mongodb_backup_ignore)
+  - [mongodb_backup_path](#mongodb_backup_path)
+  - [mongodb_backup_retention](#mongodb_backup_retention)
+  - [mongodb_cloud_monitoring_free_state](#mongodb_cloud_monitoring_free_state)
+  - [mongodb_exporter_args](#mongodb_exporter_args)
+  - [mongodb_exporter_collect_collection](#mongodb_exporter_collect_collection)
+  - [mongodb_exporter_collect_connpoolstats](#mongodb_exporter_collect_connpoolstats)
+  - [mongodb_exporter_collect_database](#mongodb_exporter_collect_database)
+  - [mongodb_exporter_collect_indexusage](#mongodb_exporter_collect_indexusage)
+  - [mongodb_exporter_collect_topmetrics](#mongodb_exporter_collect_topmetrics)
+  - [mongodb_exporter_connection](#mongodb_exporter_connection)
+  - [mongodb_exporter_download](#mongodb_exporter_download)
+  - [mongodb_exporter_enabled](#mongodb_exporter_enabled)
+  - [mongodb_exporter_password](#mongodb_exporter_password)
+  - [mongodb_exporter_username](#mongodb_exporter_username)
+  - [mongodb_exporter_version](#mongodb_exporter_version)
+  - [mongodb_extra_users](#mongodb_extra_users)
+  - [mongodb_general_users](#mongodb_general_users)
+  - [mongodb_group](#mongodb_group)
+  - [mongodb_keyfile_content](#mongodb_keyfile_content)
+  - [mongodb_keyfile_path](#mongodb_keyfile_path)
+  - [mongodb_limit_files](#mongodb_limit_files)
+  - [mongodb_limit_procs](#mongodb_limit_procs)
+  - [mongodb_logrotate_retention](#mongodb_logrotate_retention)
+  - [mongodb_master_node](#mongodb_master_node)
+  - [mongodb_metrics_password](#mongodb_metrics_password)
+  - [mongodb_metrics_update_password](#mongodb_metrics_update_password)
+  - [mongodb_metrics_username](#mongodb_metrics_username)
+  - [mongodb_net_bindip](#mongodb_net_bindip)
+  - [mongodb_net_http_enabled](#mongodb_net_http_enabled)
+  - [mongodb_net_ipv6](#mongodb_net_ipv6)
+  - [mongodb_net_maxconns](#mongodb_net_maxconns)
+  - [mongodb_net_port](#mongodb_net_port)
+  - [mongodb_operation_profiling_mode](#mongodb_operation_profiling_mode)
+  - [mongodb_operation_profiling_slow_op_threshold_ms](#mongodb_operation_profiling_slow_op_threshold_ms)
+  - [mongodb_oplog_users](#mongodb_oplog_users)
+  - [mongodb_pidfile_path](#mongodb_pidfile_path)
+  - [mongodb_pymongo_version](#mongodb_pymongo_version)
+  - [mongodb_recursive_enforce_owner](#mongodb_recursive_enforce_owner)
+  - [mongodb_replication_enable_majority_read_concern](#mongodb_replication_enable_majority_read_concern)
+  - [mongodb_replication_oplogsize](#mongodb_replication_oplogsize)
+  - [mongodb_replication_params](#mongodb_replication_params)
+  - [mongodb_replication_replindexprefetch](#mongodb_replication_replindexprefetch)
+  - [mongodb_replication_replset](#mongodb_replication_replset)
+  - [mongodb_repository](#mongodb_repository)
+  - [mongodb_root_admin_password](#mongodb_root_admin_password)
+  - [mongodb_root_admin_username](#mongodb_root_admin_username)
+  - [mongodb_root_update_password](#mongodb_root_update_password)
+  - [mongodb_security_authorization](#mongodb_security_authorization)
+  - [mongodb_security_javascript_enabled](#mongodb_security_javascript_enabled)
+  - [mongodb_server_version](#mongodb_server_version)
+  - [mongodb_set_parameters](#mongodb_set_parameters)
+  - [mongodb_storage_dirperdb](#mongodb_storage_dirperdb)
+  - [mongodb_storage_engine](#mongodb_storage_engine)
+  - [mongodb_storage_journal_enabled](#mongodb_storage_journal_enabled)
+  - [mongodb_storage_path](#mongodb_storage_path)
+  - [mongodb_storage_quota_enforced](#mongodb_storage_quota_enforced)
+  - [mongodb_storage_quota_maxfiles](#mongodb_storage_quota_maxfiles)
+  - [mongodb_storage_smallfiles](#mongodb_storage_smallfiles)
+  - [mongodb_systemlog_logappend](#mongodb_systemlog_logappend)
+  - [mongodb_systemlog_logrotate](#mongodb_systemlog_logrotate)
+  - [mongodb_systemlog_path](#mongodb_systemlog_path)
+  - [mongodb_user](#mongodb_user)
+  - [mongodb_user_admin_password](#mongodb_user_admin_password)
+  - [mongodb_user_admin_username](#mongodb_user_admin_username)
+  - [mongodb_user_update_password](#mongodb_user_update_password)
+  - [mongodb_volumes](#mongodb_volumes)
+  - [mongodb_wiredtiger_cache_size](#mongodb_wiredtiger_cache_size)
+  - [mongodb_wiredtiger_directory_for_indexes](#mongodb_wiredtiger_directory_for_indexes)
+- [Discovered Tags](#discovered-tags)
+- [Dependencies](#dependencies)
+- [License](#license)
+- [Author](#author)
 
 ---
 
@@ -394,15 +395,23 @@ Key for inter-process auth, generate it with "openssl rand -base64 741"
 #### Default value
 
 ```YAML
-mongodb_keyfile_content: "dtHmRo7L02cY5WnMl/mrn6mjLkXpepzV39VQzulNJyglcYu9XW+tph8uI/dku082\n\
-  IPf0tGttUb9KiogspyOyzVk+T1r3apLIGktu6YycdyHMqAzVrsS08cb7VecbcUKW\naODcxfRUYUGWCYjjVl8jm2x25hR4otakdHhxYi/B3eFEu2zWxvX3zgq78U0djQbl\n\
-  qp9I7uyCsireT5SNj/A0H5QoCN6zMb7stNveas8W0N6+HfFVBD5brvVXGf5Td9Bz\nEZ6e/69c7OtaNvbxEZP2SpkyZb7m0Q5vWs+YZyFWw7u9SBGXkUwTPVmVl0JLgHxA\n\
-  ADOS2lYUdQCWTS1WT3D4nqfFn6xGikC6HK9SYVp5RG0EkRGRDJ9YiFa7lYRQmzJC\nD+y2QECYXGT3pjl0u8B4AW8YgBkzcPCdD86PaZFxbycg6bvgSiwTJ/VfROnQ8crA\n\
-  tBuYdy0r5fqshT7VOPw7dezhYjFiUYv2IspVGTB87ZkQxJ4GhKQIZB/31Rz216X7\n944M6o7priJwWy9rJGk9YwSA18RoTlYNTXCdXQiUNmQl6Qd/zIVNDJ+cu1c7CwgF\n\
-  zv//L5yDdTeP5YYEPf0DHW7gX2OGfdLjgkvXibpPPll3D6p5kwvRIcyOvVaCapSH\nXJwrLJOidIjGC3UDS3+e17lNHHrw+/0ppYqh/0kfAMyZ2Si77T4jL5U3vSl3xAou\n\
-  FFCMWXCyNE5/sngFIn5PDWZssQbel7mI5x9i4EZxreaSry0BUJK2ZUbPLGdW6F+I\ntZiel1zZrVHPce+BAJCsjOIxB8jlnEd3FTjhgm8fDIrWCuRCdQ6hBL7KluqZBU/g\n\
-  6tp4/YjUC98GNQK4w52+8BzU07b/OM54JB6Q+fPhQc1VK9S4sUnG5YoB+NN426ji\nHj5YyWm1PLtbeXqSATUEuUR47KGnJxt5YZn0wnOPhEvTWZw+X0EfDahOj5HllSli\n\
-  Y9dhyzeXLgAay/bKLUNaudEMNQYh\n"
+mongodb_keyfile_content: |
+  dtHmRo7L02cY5WnMl/mrn6mjLkXpepzV39VQzulNJyglcYu9XW+tph8uI/dku082
+  IPf0tGttUb9KiogspyOyzVk+T1r3apLIGktu6YycdyHMqAzVrsS08cb7VecbcUKW
+  aODcxfRUYUGWCYjjVl8jm2x25hR4otakdHhxYi/B3eFEu2zWxvX3zgq78U0djQbl
+  qp9I7uyCsireT5SNj/A0H5QoCN6zMb7stNveas8W0N6+HfFVBD5brvVXGf5Td9Bz
+  EZ6e/69c7OtaNvbxEZP2SpkyZb7m0Q5vWs+YZyFWw7u9SBGXkUwTPVmVl0JLgHxA
+  ADOS2lYUdQCWTS1WT3D4nqfFn6xGikC6HK9SYVp5RG0EkRGRDJ9YiFa7lYRQmzJC
+  D+y2QECYXGT3pjl0u8B4AW8YgBkzcPCdD86PaZFxbycg6bvgSiwTJ/VfROnQ8crA
+  tBuYdy0r5fqshT7VOPw7dezhYjFiUYv2IspVGTB87ZkQxJ4GhKQIZB/31Rz216X7
+  944M6o7priJwWy9rJGk9YwSA18RoTlYNTXCdXQiUNmQl6Qd/zIVNDJ+cu1c7CwgF
+  zv//L5yDdTeP5YYEPf0DHW7gX2OGfdLjgkvXibpPPll3D6p5kwvRIcyOvVaCapSH
+  XJwrLJOidIjGC3UDS3+e17lNHHrw+/0ppYqh/0kfAMyZ2Si77T4jL5U3vSl3xAou
+  FFCMWXCyNE5/sngFIn5PDWZssQbel7mI5x9i4EZxreaSry0BUJK2ZUbPLGdW6F+I
+  tZiel1zZrVHPce+BAJCsjOIxB8jlnEd3FTjhgm8fDIrWCuRCdQ6hBL7KluqZBU/g
+  6tp4/YjUC98GNQK4w52+8BzU07b/OM54JB6Q+fPhQc1VK9S4sUnG5YoB+NN426ji
+  Hj5YyWm1PLtbeXqSATUEuUR47KGnJxt5YZn0wnOPhEvTWZw+X0EfDahOj5HllSli
+  Y9dhyzeXLgAay/bKLUNaudEMNQYh
 ```
 
 ### mongodb_keyfile_path
@@ -657,7 +666,7 @@ mongodb_replication_replindexprefetch: all
 
 ### mongodb_replication_replset
 
-Enable replication in the form of [/]
+Enable replication in the form of <setname>[/<optionalseedhostlist>]
 
 #### Default value
 
@@ -919,9 +928,16 @@ Directory per index for wiredtiger engine
 mongodb_wiredtiger_directory_for_indexes: true
 ```
 
+## Discovered Tags
+
+**_mongodb_**
+
+**_mongodb-exporter_**
+
+
 ## Dependencies
 
-* [rolehippie.docker](https://github.com/rolehippie/docker)
+- [rolehippie.docker](https://github.com/rolehippie/docker)
 
 ## License
 
