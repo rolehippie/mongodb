@@ -42,6 +42,7 @@ Building and improving this Ansible role have been sponsored by my employer **Pr
   * [mongodb_keyfile_path](#mongodb_keyfile_path)
   * [mongodb_limit_files](#mongodb_limit_files)
   * [mongodb_limit_procs](#mongodb_limit_procs)
+  * [mongodb_logrotate_retention](#mongodb_logrotate_retention)
   * [mongodb_master_node](#mongodb_master_node)
   * [mongodb_metrics_password](#mongodb_metrics_password)
   * [mongodb_metrics_update_password](#mongodb_metrics_update_password)
@@ -432,6 +433,16 @@ Limit for processes for the mongod service
 
 ```YAML
 mongodb_limit_procs: 524288
+```
+
+### mongodb_logrotate_retention
+
+Retention for log rotation
+
+#### Default value
+
+```YAML
+mongodb_logrotate_retention: 14
 ```
 
 ### mongodb_master_node

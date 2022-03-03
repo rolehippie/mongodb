@@ -114,6 +114,9 @@
   copy:
     content: "d {{ mongodb_pidfile_path | dirname }} 0755 {{ mongodb_user }} {{ mongodb_group }} -"
     dest: /etc/tmpfiles.d/mongodb.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   tags:
     - mongodb
 
@@ -142,6 +145,9 @@
   template:
     src: readahead/service.j2
     dest: /etc/systemd/system/mongod-readahead.service
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   tags:
     - mongodb
 
@@ -188,6 +194,9 @@
   template:
     src: default.j2
     dest: /etc/default/mongod
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   tags:
     - mongodb
 
@@ -197,6 +206,9 @@
   template:
     src: service.j2
     dest: /etc/systemd/system/mongod.service
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   tags:
     - mongodb
 

@@ -1,5 +1,5 @@
 {{ mongodb_systemlog_path }} {
-	rotate 14
+	rotate {{ mongodb_logrotate_retention }}
 	daily
 	missingok
 	notifempty

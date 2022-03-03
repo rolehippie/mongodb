@@ -218,6 +218,9 @@ mongodb_cloud_monitoring_free_state: "off"
 # @end
 mongodb_set_parameters: {}
 
+# @var mongodb_logrotate_retention:description: Retention for log rotation
+mongodb_logrotate_retention: 14
+
 # @var mongodb_group:description: Name of the group owning MongoDB
 mongodb_group: mongodb
 
