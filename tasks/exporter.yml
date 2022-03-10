@@ -17,23 +17,11 @@
     - mongodb
     - mongodb-exporter
 
-- name: Create install directory
-  when: mongodb_exporter_version_changed
-  file:
-    path: /usr/local/src/mongodb-exporter
-    owner: root
-    group: root
-    mode: u=rwx,g=rx,o=rx
-    state: directory
-  tags:
-    - mongodb
-    - mongodb-exporter
-
 - name: Download release tarball
   when: mongodb_exporter_version_changed
   unarchive:
     src: "{{ mongodb_exporter_download }}"
-    dest: /usr/local/src/mongodb-exporter
+    dest: /usr/local/src
     remote_src: True
     owner: root
     group: root
@@ -46,7 +34,7 @@
   notify:
     - Restart mongodb-exporter
   copy:
-    src: /usr/local/src/mongodb-exporter/mongodb_exporter
+    src: /usr/local/src/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64/mongodb_exporter
     dest: /usr/bin/mongodb-exporter
     remote_src: True
     owner: root
@@ -95,7 +83,7 @@
 
 - name: Remove install directory
   file:
-    path: /usr/local/src/mongodb-exporter
+    path: /usr/local/src/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64
     state: absent
   tags:
     - mongodb
