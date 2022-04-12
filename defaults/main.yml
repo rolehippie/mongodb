@@ -201,6 +201,9 @@ mongodb_wiredtiger_cache_size:
 # @var mongodb_wiredtiger_directory_for_indexes:description: Directory per index for wiredtiger engine
 mongodb_wiredtiger_directory_for_indexes: True
 
+# @var mongodb_wirdtiger_config_string:description: Config String for the wiredtiger engine
+mongodb_wiredtiger_config_string:
+
 # @var mongodb_operation_profiling_slow_op_threshold_ms:description: Profiling slow operations threshold in ms
 mongodb_operation_profiling_slow_op_threshold_ms: 100
 
