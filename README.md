@@ -84,7 +84,9 @@ Building and improving this Ansible role have been sponsored by my current and p
   - [mongodb_user_admin_username](#mongodb_user_admin_username)
   - [mongodb_user_update_password](#mongodb_user_update_password)
   - [mongodb_volumes](#mongodb_volumes)
+  - [mongodb_wirdtiger_config_string](#mongodb_wirdtiger_config_string)
   - [mongodb_wiredtiger_cache_size](#mongodb_wiredtiger_cache_size)
+  - [mongodb_wiredtiger_config_string](#mongodb_wiredtiger_config_string)
   - [mongodb_wiredtiger_directory_for_indexes](#mongodb_wiredtiger_directory_for_indexes)
 - [Discovered Tags](#discovered-tags)
 - [Dependencies](#dependencies)
@@ -906,6 +908,10 @@ List of volumes/disks used to store the data tweaked by blockdev
 mongodb_volumes: []
 ```
 
+### mongodb_wirdtiger_config_string
+
+Config String for the wiredtiger engine
+
 ### mongodb_wiredtiger_cache_size
 
 Cache size for wiredtiger cache size
@@ -914,6 +920,14 @@ Cache size for wiredtiger cache size
 
 ```YAML
 mongodb_wiredtiger_cache_size:
+```
+
+### mongodb_wiredtiger_config_string
+
+#### Default value
+
+```YAML
+mongodb_wiredtiger_config_string:
 ```
 
 ### mongodb_wiredtiger_directory_for_indexes
