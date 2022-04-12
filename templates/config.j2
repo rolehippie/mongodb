@@ -55,7 +55,7 @@ storage:
 {% endif %}
       directoryForIndexes: {{ mongodb_wiredtiger_directory_for_indexes | lower }}
 {% if mongodb_wiredtiger_config_string | default(False) %}
-    configString: "{{ mongodb_wiredtiger_config_string }}"
+      configString: "{{ mongodb_wiredtiger_config_string }}"
 {% endif %}
 {% endif %}
 
