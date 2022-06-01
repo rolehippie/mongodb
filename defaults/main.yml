@@ -287,11 +287,11 @@ mongodb_exporter_username:
 # @var mongodb_exporter_username:description: Password to secure the metrics endpoint
 mongodb_exporter_password:
 
+# @var mongodb_exporter_collect_database:description: Enable collector for replicasets
+mongodb_exporter_collect_replicaset: True
+
 # @var mongodb_exporter_collect_database:description: Enable collector for databases
 mongodb_exporter_collect_database: True
-
-# @var mongodb_exporter_collect_collection:description: Enable collector for collections
-mongodb_exporter_collect_collection: False
 
 # @var mongodb_exporter_collect_topmetrics:description: Enable collector for top metrics
 mongodb_exporter_collect_topmetrics: True
@@ -299,8 +299,8 @@ mongodb_exporter_collect_topmetrics: True
 # @var mongodb_exporter_collect_indexusage:description: Enable collector for index usage
 mongodb_exporter_collect_indexusage: False
 
-# @var mongodb_exporter_collect_connpoolstats:description: Enable collector for conn pool stats
-mongodb_exporter_collect_connpoolstats: True
+# @var mongodb_exporter_collect_collection:description: Enable collector for collections
+mongodb_exporter_collect_collection: False
 
 # @var mongodb_exporter_args:description: List of arguments joined for the executable
 mongodb_exporter_args: []

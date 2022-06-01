@@ -2,4 +2,4 @@ MONGODB_URI="{{ mongodb_exporter_connection }}"
 {% if mongodb_exporter_username | default(False) or mongodb_exporter_password | default(False) %}
 HTTP_AUTH="{{ mongodb_exporter_username }}:{{ mongodb_exporter_password }}"
 {% endif %}
-ARGS="{{ '--collect.database ' if mongodb_exporter_collect_database else '' }}{{ '--collect.collection ' if mongodb_exporter_collect_collection else '' }}{{ '--collect.topmetrics ' if mongodb_exporter_collect_topmetrics else '' }}{{ '--collect.indexusage ' if mongodb_exporter_collect_indexusage else '' }}{{ '--collect.connpoolstats ' if mongodb_exporter_collect_connpoolstats else '' }}{{ mongodb_exporter_args | join(' ') }}"
+ARGS="{{ '--collector.replicasetstatus ' if mongodb_exporter_collect_replicaset else '' }}{{ '--collector.dbstats ' if mongodb_exporter_collect_database else '' }}{{ '--collector.topmetrics ' if mongodb_exporter_collect_topmetrics else '' }}{{ '--collector.indexstats ' if mongodb_exporter_collect_indexusage else '' }}{{ '--collector.collstats ' if mongodb_exporter_collect_collection else '' }}{{ mongodb_exporter_args | join(' ') }}"
