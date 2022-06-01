@@ -23,9 +23,9 @@ Building and improving this Ansible role have been sponsored by my current and p
   - [mongodb_cloud_monitoring_free_state](#mongodb_cloud_monitoring_free_state)
   - [mongodb_exporter_args](#mongodb_exporter_args)
   - [mongodb_exporter_collect_collection](#mongodb_exporter_collect_collection)
-  - [mongodb_exporter_collect_connpoolstats](#mongodb_exporter_collect_connpoolstats)
   - [mongodb_exporter_collect_database](#mongodb_exporter_collect_database)
   - [mongodb_exporter_collect_indexusage](#mongodb_exporter_collect_indexusage)
+  - [mongodb_exporter_collect_replicaset](#mongodb_exporter_collect_replicaset)
   - [mongodb_exporter_collect_topmetrics](#mongodb_exporter_collect_topmetrics)
   - [mongodb_exporter_connection](#mongodb_exporter_connection)
   - [mongodb_exporter_download](#mongodb_exporter_download)
@@ -222,16 +222,6 @@ Enable collector for collections
 mongodb_exporter_collect_collection: false
 ```
 
-### mongodb_exporter_collect_connpoolstats
-
-Enable collector for conn pool stats
-
-#### Default value
-
-```YAML
-mongodb_exporter_collect_connpoolstats: true
-```
-
 ### mongodb_exporter_collect_database
 
 Enable collector for databases
@@ -250,6 +240,14 @@ Enable collector for index usage
 
 ```YAML
 mongodb_exporter_collect_indexusage: false
+```
+
+### mongodb_exporter_collect_replicaset
+
+#### Default value
+
+```YAML
+mongodb_exporter_collect_replicaset: true
 ```
 
 ### mongodb_exporter_collect_topmetrics
