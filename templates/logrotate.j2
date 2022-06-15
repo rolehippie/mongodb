@@ -8,6 +8,6 @@
 	sharedscripts
 	create 755 mongodb mongodb
 	postrotate
-		kill -SIGUSR1 `cat /run/mongodb/mongod.pid 2>/dev/null` >/dev/null 2>&1
+		kill -USR1 `cat /run/mongodb/mongod.pid 2>/dev/null` >/dev/null 2>&1
 	endscript
 }
