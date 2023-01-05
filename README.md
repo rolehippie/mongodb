@@ -1,6 +1,6 @@
 # mongodb
 
-[![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/mongodb) [![Testing Build](https://github.com/rolehippie/mongodb/workflows/testing/badge.svg)](https://github.com/rolehippie/mongodb/actions?query=workflow%3Atesting) [![Readme Build](https://github.com/rolehippie/mongodb/workflows/readme/badge.svg)](https://github.com/rolehippie/mongodb/actions?query=workflow%3Areadme) [![Galaxy Build](https://github.com/rolehippie/mongodb/workflows/galaxy/badge.svg)](https://github.com/rolehippie/mongodb/actions?query=workflow%3Agalaxy) [![License: Apache-2.0](https://img.shields.io/github/license/rolehippie/mongodb)](https://github.com/rolehippie/mongodb/blob/master/LICENSE)
+[![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/mongodb) [![General Workflow](https://github.com/rolehippie/mongodb/actions/workflows/general.yml/badge.svg)](https://github.com/rolehippie/mongodb/actions/workflows/general.yml) [![Readme Workflow](https://github.com/rolehippie/mongodb/actions/workflows/readme.yml/badge.svg)](https://github.com/rolehippie/mongodb/actions/workflows/readme.yml) [![Galaxy Workflow](https://github.com/rolehippie/mongodb/actions/workflows/galaxy.yml/badge.svg)](https://github.com/rolehippie/mongodb/actions/workflows/galaxy.yml) [![License: Apache-2.0](https://img.shields.io/github/license/rolehippie/mongodb)](https://github.com/rolehippie/mongodb/blob/master/LICENSE) [![Ansible Role](https://img.shields.io/ansible/role/55290)](https://galaxy.ansible.com/rolehippie/mongodb)
 
 Ansible role to install and configure a MongoDB object/document-oriented database.
 
@@ -947,7 +947,7 @@ mongodb_wiredtiger_directory_for_indexes: true
 
 ## Dependencies
 
-- [rolehippie.docker](https://github.com/rolehippie/docker)
+- None
 
 ## License
 

@@ -3,6 +3,6 @@
 - name: Converge
   hosts: all
   roles:
-    - role: mongodb
+    - role: rolehippie.mongodb
 
 ...
