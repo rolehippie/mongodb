@@ -12,7 +12,7 @@
 
 - name: Fact version change
   set_fact:
-    mongodb_exporter_version_changed: "{{ mongodb_exporter_version_check.rc != 0 or (mongodb_exporter_version_check.stdout_lines is defined and mongodb_exporter_version not in mongodb_exporter_version_check.stdout_lines[0]) }}"
+    mongodb_exporter_version_changed: "{{ mongodb_exporter_version_check.rc != 0 or (mongodb_exporter_version_check.stdout_lines is defined and mongodb_exporter_version not in mongodb_exporter_version_check.stdout_lines[1]) }}"
   tags:
     - mongodb
     - mongodb-exporter
