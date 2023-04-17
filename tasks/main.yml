@@ -1,5 +1,43 @@
 # Standards: 1.2
 ---
+- name: Remove legacy keys
+  loop:
+    - 0C49F3730359A14518585931BC711F9BA15703C6
+    - 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+    - 9DA31620334BD75D9DCB49F368818C72E52529D4
+    - E162F504A20CDF15827F718D4B7C549A058F8B6B
+    - 20691EEC35216C63CAF66CE1656408E390CFB1F5
+  apt_key:
+    id: "{{ item }}"
+    state: absent
+  tags:
+    - mongodb
+
+- name: Remove legacy repo
+  apt_repository:
+    repo: "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_server_version }} multiverse"
+    filename: mongodb
+    update_cache: False
+    state: absent
+  tags:
+    - mongodb
+
+- name: Download repo key
+  shell:
+    cmd: "curl -sSL 'https://www.mongodb.org/static/pgp/server-{{ mongodb_server_version }}.asc' | gpg --dearmor --output {{ mongodb_keyring }}"
+    creates: "{{ mongodb_keyring }}"
+  tags:
+    - mongodb
+
+- name: Add apt repository
+  apt_repository:
+    repo: "deb [signed-by={{ mongodb_keyring }}] http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_server_version }} multiverse"
+    filename: mongodb
+    update_cache: True
+    state: present
+  tags:
+    - mongodb
+
 - name: Create required group
   group:
     name: "{{ mongodb_group }}"
@@ -17,23 +55,6 @@
     home: /var/lib/mongodb
     create_home: False
     system: True
-    state: present
-  tags:
-    - mongodb
-
-- name: Download repo key
-  apt_key:
-    url: "https://www.mongodb.org/static/pgp/server-{{ mongodb_server_version }}.asc"
-    id: "{{ mongodb_apt_key_id[mongodb_server_version] }}"
-    state: present
-  tags:
-    - mongodb
-
-- name: Add apt repository
-  apt_repository:
-    repo: "{{ mongodb_repository[mongodb_server_version] }}"
-    filename: mongodb
-    update_cache: True
     state: present
   tags:
     - mongodb

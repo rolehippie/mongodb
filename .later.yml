@@ -4,6 +4,9 @@ rules:
     - molecule/ubuntu/tests
     - README.md
 
+  warning_filter:
+    - ANSIBLE0008
+
 ansible:
   custom_modules:
     - mongodb_replication
