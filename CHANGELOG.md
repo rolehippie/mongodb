@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.0](https://github.com/rolehippie/mongodb/compare/v1.1.0...v2.0.0) (2023-04-17)
+
+
+### Features
+
+* **deps:** update dependency percona/mongodb_exporter to v2 ([adde50e](https://github.com/rolehippie/mongodb/commit/adde50e80077052e3cffda25a49c1432b04f8d1b))
+* use unified path for repo key and drop legacy key ([9bcaccd](https://github.com/rolehippie/mongodb/commit/9bcaccdb6cff83bc54e0ab6eded7269e9af50f43))
+
+
+### Bugfixes
+
+* exporter version info prints on second line ([066b83f](https://github.com/rolehippie/mongodb/commit/066b83ff53bd73cdc8440ae40a5f0aea27f45239))
+
 ## [1.1.0](https://github.com/rolehippie/mongodb/compare/v1.0.0...v1.1.0) (2023-02-20)
 
 
