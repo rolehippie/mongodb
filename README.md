@@ -18,7 +18,6 @@ Building and improving this Ansible role have been sponsored by my current and p
 - [Requirements](#requirements)
 - [Default Variables](#default-variables)
   - [mongodb_admin_update_password](#mongodb_admin_update_password)
-  - [mongodb_apt_key_id](#mongodb_apt_key_id)
   - [mongodb_backup_addition_script](#mongodb_backup_addition_script)
   - [mongodb_backup_cron](#mongodb_backup_cron)
   - [mongodb_backup_enabled](#mongodb_backup_enabled)
@@ -44,6 +43,7 @@ Building and improving this Ansible role have been sponsored by my current and p
   - [mongodb_group](#mongodb_group)
   - [mongodb_keyfile_content](#mongodb_keyfile_content)
   - [mongodb_keyfile_path](#mongodb_keyfile_path)
+  - [mongodb_keyring](#mongodb_keyring)
   - [mongodb_limit_files](#mongodb_limit_files)
   - [mongodb_limit_procs](#mongodb_limit_procs)
   - [mongodb_logrotate_retention](#mongodb_logrotate_retention)
@@ -67,7 +67,6 @@ Building and improving this Ansible role have been sponsored by my current and p
   - [mongodb_replication_params](#mongodb_replication_params)
   - [mongodb_replication_replindexprefetch](#mongodb_replication_replindexprefetch)
   - [mongodb_replication_replset](#mongodb_replication_replset)
-  - [mongodb_repository](#mongodb_repository)
   - [mongodb_root_admin_password](#mongodb_root_admin_password)
   - [mongodb_root_admin_username](#mongodb_root_admin_username)
   - [mongodb_root_update_password](#mongodb_root_update_password)
@@ -116,21 +115,6 @@ Define when root admin password should be changed
 
 ```YAML
 mongodb_admin_update_password: always
-```
-
-### mongodb_apt_key_id
-
-Dict of GPG key IDs matching the choosen version
-
-#### Default value
-
-```YAML
-mongodb_apt_key_id:
-  '3.4': 0C49F3730359A14518585931BC711F9BA15703C6
-  '3.6': 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
-  '4.0': 9DA31620334BD75D9DCB49F368818C72E52529D4
-  '4.2': E162F504A20CDF15827F718D4B7C549A058F8B6B
-  '4.4': 20691EEC35216C63CAF66CE1656408E390CFB1F5
 ```
 
 ### mongodb_backup_addition_script
@@ -433,6 +417,16 @@ Path to store the keyfile content
 mongodb_keyfile_path: /etc/mongod.key
 ```
 
+### mongodb_keyring
+
+Path for the repository keyring
+
+#### Default value
+
+```YAML
+mongodb_keyring: /usr/share/keyrings/mongodb-{{ mongodb_server_version }}-archive-keyring.gpg
+```
+
 ### mongodb_limit_files
 
 Limit for open files for the mongod service
@@ -681,26 +675,6 @@ Enable replication in the form of <setname>[/<optionalseedhostlist>]
 
 ```YAML
 mongodb_replication_replset:
-```
-
-### mongodb_repository
-
-Dict of repositories matching the choosen version
-
-#### Default value
-
-```YAML
-mongodb_repository:
-  '3.4': deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/3.4
-    multiverse
-  '3.6': deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/3.6
-    multiverse
-  '4.0': deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/4.0
-    multiverse
-  '4.2': deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/4.2
-    multiverse
-  '4.4': deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/4.4
-    multiverse
 ```
 
 ### mongodb_root_admin_password
