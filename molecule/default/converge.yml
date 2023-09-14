@@ -3,7 +3,7 @@
 - name: Converge
   hosts: all
   vars:
-    mongodb_server_version: "{{ '6.0' if ansible_distribution_version is version('18.04', '>') else '4.0' }}"
+    mongodb_server_version: "6.0"
   roles:
     - role: rolehippie.mongodb
 
