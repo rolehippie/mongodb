@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.0](https://github.com/rolehippie/mongodb/compare/v2.0.0...v2.1.0) (2023-09-18)
+
+
+### Features
+
+* drop support for xenial and bionic, gpg key expired ([763082f](https://github.com/rolehippie/mongodb/commit/763082f3c1a945775080d11c9a84c8e410e64079))
+
+
+### Bugfixes
+
+* the latest version of exporter is 0.39.0 ([ceb7c1f](https://github.com/rolehippie/mongodb/commit/ceb7c1ffa2dd996fc9c1df7decc28142e5997743))
+
 ## [2.0.0](https://github.com/rolehippie/mongodb/compare/v1.1.0...v2.0.0) (2023-04-17)
 
 
