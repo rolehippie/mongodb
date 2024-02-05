@@ -4,6 +4,10 @@ rules:
     - molecule/ubuntu/tests
     - README.md
 
+yamllint:
+  document-end:
+    present: True
+
 ansible:
   custom_modules:
     - mongodb_replication
