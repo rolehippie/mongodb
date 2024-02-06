@@ -931,7 +931,7 @@ mongodb_wiredtiger_directory_for_indexes: true
 
 ## Dependencies
 
-- None
+- [community.mongodb](https://github.com/ansible-collections/community.mongodb)
 
 ## License
 
