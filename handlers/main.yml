@@ -1,18 +1,18 @@
 ---
 - name: Reload mongodb
-  systemd:
+  ansible.builtin.systemd:
     name: mongod
     state: reloaded
     daemon_reload: True
 
 - name: Restart mongodb
-  systemd:
+  ansible.builtin.systemd:
     name: mongod
     state: restarted
     daemon_reload: True
 
 - name: Restart mongodb-exporter
-  systemd:
+  ansible.builtin.systemd:
     name: mongodb-exporter
     state: restarted
     daemon_reload: True

@@ -4,13 +4,13 @@
   failed_when: False
   changed_when: False
   check_mode: False
-  shell: /usr/bin/mongodb-exporter --version  2>&1
+  ansible.builtin.shell: /usr/bin/mongodb-exporter --version  2>&1
   tags:
     - mongodb
     - mongodb-exporter
 
 - name: Fact version change
-  set_fact:
+  ansible.builtin.set_fact:
     mongodb_exporter_version_changed: "{{ mongodb_exporter_version_check.rc != 0 or (mongodb_exporter_version_check.stdout_lines is defined and mongodb_exporter_version not in mongodb_exporter_version_check.stdout_lines[1]) }}"
   tags:
     - mongodb
@@ -18,7 +18,7 @@
 
 - name: Download release tarball
   when: mongodb_exporter_version_changed
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ mongodb_exporter_download }}"
     dest: /usr/local/src
     remote_src: True
@@ -32,7 +32,7 @@
   when: mongodb_exporter_version_changed and not ansible_check_mode
   notify:
     - Restart mongodb-exporter
-  copy:
+  ansible.builtin.copy:
     src: /usr/local/src/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64/mongodb_exporter
     dest: /usr/bin/mongodb-exporter
     remote_src: True
@@ -46,7 +46,7 @@
 - name: Write default config
   notify:
     - Restart mongodb-exporter
-  template:
+  ansible.builtin.template:
     src: exporter/default.j2
     dest: /etc/default/mongodb-exporter
     owner: root
@@ -59,7 +59,7 @@
 - name: Write service file
   notify:
     - Restart mongodb-exporter
-  template:
+  ansible.builtin.template:
     src: exporter/service.j2
     dest: /etc/systemd/system/mongodb-exporter.service
     owner: root
@@ -70,7 +70,7 @@
     - mongodb-exporter
 
 - name: Start mongodb-exporter service
-  systemd:
+  ansible.builtin.systemd:
     name: mongodb-exporter
     state: "{{ 'started' if mongodb_exporter_enabled else 'stopped' }}"
     daemon_reload: True
@@ -81,7 +81,7 @@
     - mongodb-exporter
 
 - name: Remove install directory
-  file:
+  ansible.builtin.file:
     path: /usr/local/src/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64
     state: absent
   tags:

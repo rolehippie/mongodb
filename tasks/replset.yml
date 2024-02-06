@@ -7,7 +7,7 @@
   failed_when: False
   check_mode: False
   ignore_errors: True
-  command: >
+  ansible.builtin.command: >
     mongo --quiet
       --username {{ mongodb_root_admin_username }}
       --password {{ mongodb_root_admin_password }}
@@ -21,7 +21,7 @@
   when:
     - mongodb_security_authorization == 'enabled'
     - mongodb_user_admin_check.rc != 0
-  include_tasks: auth.yml
+  ansible.builtin.include_tasks: auth.yml
   tags:
     - mongodb
 

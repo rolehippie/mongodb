@@ -6,14 +6,14 @@
     - 9DA31620334BD75D9DCB49F368818C72E52529D4
     - E162F504A20CDF15827F718D4B7C549A058F8B6B
     - 20691EEC35216C63CAF66CE1656408E390CFB1F5
-  apt_key:
+  ansible.builtin.apt_key:
     id: "{{ item }}"
     state: absent
   tags:
     - mongodb
 
 - name: Remove legacy repo
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_server_version }} multiverse"
     filename: mongodb
     update_cache: False
@@ -22,14 +22,14 @@
     - mongodb
 
 - name: Download repo key
-  shell:
+  ansible.builtin.shell:
     cmd: "curl -sSL 'https://www.mongodb.org/static/pgp/server-{{ mongodb_server_version }}.asc' | gpg --dearmor --output {{ mongodb_keyring }}"
     creates: "{{ mongodb_keyring }}"
   tags:
     - mongodb
 
 - name: Add apt repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb [signed-by={{ mongodb_keyring }}] http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_server_version }} multiverse"
     filename: mongodb
     update_cache: True
@@ -38,7 +38,7 @@
     - mongodb
 
 - name: Create required group
-  group:
+  ansible.builtin.group:
     name: "{{ mongodb_group }}"
     system: True
     state: present
@@ -46,11 +46,11 @@
     - mongodb
 
 - name: Create required user
-  user:
+  ansible.builtin.user:
     name: "{{ mongodb_user }}"
     group: "{{ mongodb_group }}"
     password: "!"
-    shell: /usr/sbin/nologin
+    ansible.builtin.shell: /usr/sbin/nologin
     home: /var/lib/mongodb
     create_home: False
     system: True
@@ -63,14 +63,14 @@
     - mongodb-org
     - numactl
     - python3-pip
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   tags:
     - mongodb
 
 - name: Install pymongo pip
-  pip:
+  ansible.builtin.pip:
     name: pymongo
     state: "{{ mongodb_pymongo_version is defined | ternary('present', 'latest') }}"
     version: "{{ mongodb_pymongo_version | default(omit) }}"
@@ -78,7 +78,7 @@
     - mongodb
 
 - name: Create data directory
-  file:
+  ansible.builtin.file:
     path: "{{ mongodb_storage_path }}"
     owner: "{{ mongodb_user }}"
     group: "{{ mongodb_user }}"
@@ -88,7 +88,7 @@
     - mongodb
 
 - name: Enforce data ownership
-  file:
+  ansible.builtin.file:
     path: "{{ mongodb_storage_path }}"
     owner: "{{ mongodb_user }}"
     group: "{{ mongodb_user }}"
@@ -99,7 +99,7 @@
     - mongodb
 
 - name: Create log directory
-  file:
+  ansible.builtin.file:
     dest: "{{ mongodb_systemlog_path | dirname }}"
     owner: "{{ mongodb_user }}"
     group: "{{ mongodb_user }}"
@@ -110,7 +110,7 @@
     - mongodb
 
 - name: Create log file
-  copy:
+  ansible.builtin.copy:
     content: ""
     dest: "{{ mongodb_systemlog_path }}"
     owner: "{{ mongodb_user }}"
@@ -121,7 +121,7 @@
     - mongodb
 
 - name: Create logrotate config
-  template:
+  ansible.builtin.template:
     src: logrotate.j2
     dest: /etc/logrotate.d/mongodb
     owner: root
@@ -131,7 +131,7 @@
     - mongodb
 
 - name: Write tmpfiles config
-  copy:
+  ansible.builtin.copy:
     content: "d {{ mongodb_pidfile_path | dirname }} 0755 {{ mongodb_user }} {{ mongodb_group }} -"
     dest: /etc/tmpfiles.d/mongodb.conf
     owner: root
@@ -141,7 +141,7 @@
     - mongodb
 
 - name: Create tmpfiles dir
-  file:
+  ansible.builtin.file:
     path: "{{ mongodb_pidfile_path | dirname }}"
     owner: "{{ mongodb_user }}"
     group: "{{ mongodb_group }}"
@@ -151,7 +151,7 @@
     - mongodb
 
 - name: Cron env variables
-  cron:
+  ansible.builtin.cron:
     cron_file: mongodb
     name: PATH
     env: True
@@ -162,7 +162,7 @@
     - mongodb
 
 - name: Write readahead service
-  template:
+  ansible.builtin.template:
     src: readahead/service.j2
     dest: /etc/systemd/system/mongod-readahead.service
     owner: root
@@ -172,7 +172,7 @@
     - mongodb
 
 - name: Write readahead script
-  template:
+  ansible.builtin.template:
     src: readahead/script.j2
     dest: /usr/local/bin/mongod-readahead
     owner: root
@@ -182,7 +182,7 @@
     - mongodb
 
 - name: Cron readahead script
-  cron:
+  ansible.builtin.cron:
     name: readahead
     cron_file: mongodb
     minute: "*/5"
@@ -199,7 +199,7 @@
 - name: Write mongod config
   notify:
     - Restart mongodb
-  template:
+  ansible.builtin.template:
     src: config.j2
     dest: /etc/mongod.conf
     owner: root
@@ -211,7 +211,7 @@
 - name: Write default config
   notify:
     - Restart mongodb
-  template:
+  ansible.builtin.template:
     src: default.j2
     dest: /etc/default/mongod
     owner: root
@@ -223,7 +223,7 @@
 - name: Write service file
   notify:
     - Restart mongodb
-  template:
+  ansible.builtin.template:
     src: service.j2
     dest: /etc/systemd/system/mongod.service
     owner: root
@@ -234,7 +234,7 @@
 
 - name: Write secret key
   when: mongodb_replication_replset | default(False)
-  copy:
+  ansible.builtin.copy:
     content: "{{ mongodb_keyfile_content }}"
     dest: "{{ mongodb_keyfile_path }}"
     owner: "{{ mongodb_user }}"
@@ -244,7 +244,7 @@
     - mongodb
 
 - name: Start mongod service
-  systemd:
+  ansible.builtin.systemd:
     name: mongod
     state: started
     daemon_reload: True
@@ -255,7 +255,7 @@
 
 - name: Write backup script
   when: mongodb_backup_enabled
-  template:
+  ansible.builtin.template:
     src: backup.j2
     dest: /usr/local/bin/mongodb-backup
     owner: root
@@ -266,14 +266,14 @@
 
 - name: Remove backup script
   when: not mongodb_backup_enabled
-  file:
+  ansible.builtin.file:
     path: /usr/local/bin/mongodb-backup
     state: absent
   tags:
     - mongodb
 
 - name: Create backup cronjobs
-  cron:
+  ansible.builtin.cron:
     name: mongodb backup
     special_time: "{{ mongodb_backup_cron }}"
     job: /usr/bin/cronic /usr/local/bin/mongodb-backup
@@ -282,14 +282,14 @@
     - mongodb
 
 - name: Postinstall handlers flush
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
   tags:
     - mongodb
 
 - name: Include replset config
   when:
     - mongodb_master_node == inventory_hostname
-  include_tasks: replset.yml
+  ansible.builtin.include_tasks: replset.yml
   tags:
     - mongodb
 
@@ -299,7 +299,7 @@
     - mongodb_master_node == inventory_hostname
   # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
-  mongodb_user:
+  community.mongodb.mongodb_user:
     login_host: "{{ mongodb_master_node | default('localhost') }}"
     login_port: "{{ mongodb_net_port | default(27017) }}"
     login_user: "{{ mongodb_root_admin_username }}"
@@ -318,7 +318,7 @@
     - mongodb_master_node == inventory_hostname
   # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
-  mongodb_user:
+  community.mongodb.mongodb_user:
     login_host: "{{ mongodb_master_node | default('localhost') }}"
     login_port: "{{ mongodb_net_port | default(27017) }}"
     login_user: "{{ mongodb_root_admin_username }}"
@@ -340,7 +340,7 @@
     - mongodb_master_node == inventory_hostname
   # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
-  mongodb_user:
+  community.mongodb.mongodb_user:
     login_host: "{{ mongodb_master_node | default('localhost') }}"
     login_port: "{{ mongodb_net_port | default(27017) }}"
     login_user: "{{ mongodb_user_admin_username }}"
@@ -364,7 +364,7 @@
     - mongodb_master_node == inventory_hostname
   # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
-  mongodb_user:
+  community.mongodb.mongodb_user:
     login_host: "{{ mongodb_master_node | default('localhost') }}"
     login_port: "{{ mongodb_net_port | default(27017) }}"
     login_user: "{{ mongodb_user_admin_username }}"
@@ -379,7 +379,7 @@
 
 - name: Include exporter tasks
   when: mongodb_exporter_enabled | default(False)
-  include_tasks: exporter.yml
+  ansible.builtin.include_tasks: exporter.yml
   tags:
     - mongodb
     - mongodb-exporter
