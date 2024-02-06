@@ -50,7 +50,7 @@
     name: "{{ mongodb_user }}"
     group: "{{ mongodb_group }}"
     password: "!"
-    ansible.builtin.shell: /usr/sbin/nologin
+    shell: /usr/sbin/nologin
     home: /var/lib/mongodb
     create_home: False
     system: True
