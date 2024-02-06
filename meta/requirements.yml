@@ -1,7 +1,0 @@
----
-collections:
- - community.mongodb
-
-roles: []
-
-...
