@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.0.0](https://github.com/rolehippie/mongodb/compare/v2.2.0...v3.0.0) (2024-02-12)
+
+
+### Features
+
+* used full qualified collection names ([8d7a97f](https://github.com/rolehippie/mongodb/commit/8d7a97f8067419adeb47fe0633912c02c1471edb))
+
+
+### Bugfixes
+
+* remove meta requirements and document used collections ([670ab9e](https://github.com/rolehippie/mongodb/commit/670ab9e7c51e75942eadc8db68be850e00642ba8))
+* use right attribute for user shell ([31b0b0a](https://github.com/rolehippie/mongodb/commit/31b0b0a33e2a349a908737cce759935ecbab3d2b))
+
 ## [2.2.0](https://github.com/rolehippie/mongodb/compare/v2.1.0...v2.2.0) (2023-11-27)
 
 
