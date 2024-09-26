@@ -258,7 +258,7 @@ mongodb_exporter_enabled: True
 
 # @var mongodb_exporter_version:description: Version of the release to install
 # renovate: datasource=github-releases depName=percona/mongodb_exporter
-mongodb_exporter_version: 0.41.0
+mongodb_exporter_version: 0.41.1
 
 # @var mongodb_exporter_download:description: URL to the archive of the release to install
 mongodb_exporter_download: "https://github.com/percona/mongodb_exporter/releases/download/v{{ mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64.tar.gz"
