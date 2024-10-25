@@ -317,7 +317,7 @@ Version of the release to install
 #### Default value
 
 ```YAML
-mongodb_exporter_version: 0.41.2
+mongodb_exporter_version: 0.42.0
 ```
 
 ### mongodb_extra_users
