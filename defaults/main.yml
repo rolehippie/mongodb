@@ -1,8 +1,9 @@
 ---
 # @var mongodb_server_version:description: Version of MongoDB that gets installed
-mongodb_server_version: "4.0"
+mongodb_server_version: "8.0"
 
 # @var mongodb_server_version:description: Version of pymongo installed via pip
+# renovate: datasource=pypi depName=pymongo
 mongodb_pymongo_version: 3.12.3
 
 # @var mongodb_limit_files:description: Limit for open files for the mongod service
