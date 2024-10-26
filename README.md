@@ -56,9 +56,11 @@ Building and improving this Ansible role have been sponsored by my current and p
   - [mongodb_net_ipv6](#mongodb_net_ipv6)
   - [mongodb_net_maxconns](#mongodb_net_maxconns)
   - [mongodb_net_port](#mongodb_net_port)
+  - [mongodb_numa_enabled](#mongodb_numa_enabled)
   - [mongodb_operation_profiling_mode](#mongodb_operation_profiling_mode)
   - [mongodb_operation_profiling_slow_op_threshold_ms](#mongodb_operation_profiling_slow_op_threshold_ms)
   - [mongodb_oplog_users](#mongodb_oplog_users)
+  - [mongodb_packages](#mongodb_packages)
   - [mongodb_pidfile_path](#mongodb_pidfile_path)
   - [mongodb_pymongo_version](#mongodb_pymongo_version)
   - [mongodb_recursive_enforce_owner](#mongodb_recursive_enforce_owner)
@@ -542,6 +544,16 @@ mongodb_net_maxconns: 51200
 mongodb_net_port: 27017
 ```
 
+### mongodb_numa_enabled
+
+Enable if the system supports NUMA policies
+
+#### Default value
+
+```YAML
+mongodb_numa_enabled: true
+```
+
 ### mongodb_operation_profiling_mode
 
 Mode for operation profiling
@@ -583,6 +595,20 @@ mongodb_oplog_users:
     update_password: on_create
 ```
 
+### mongodb_packages
+
+List of packages to install for mongodb
+
+#### Default value
+
+```YAML
+mongodb_packages:
+  - mongodb-org
+  - numactl
+  - python3-pip
+  - python3-pymongo
+```
+
 ### mongodb_pidfile_path
 
 Path to the pid file
@@ -598,7 +624,7 @@ mongodb_pidfile_path: /run/mongodb/mongod.pid
 #### Default value
 
 ```YAML
-mongodb_pymongo_version: 3.12.3
+mongodb_pymongo_version: false
 ```
 
 ### mongodb_recursive_enforce_owner
@@ -729,7 +755,7 @@ Specify the port number to listen to
 #### Default value
 
 ```YAML
-mongodb_server_version: '4.0'
+mongodb_server_version: '8.0'
 ```
 
 ### mongodb_set_parameters
