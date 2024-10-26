@@ -38,8 +38,10 @@ storage:
   dbPath: {{ mongodb_storage_path }}
   directoryPerDB: {{ mongodb_storage_dirperdb | lower }}
   engine: {{ mongodb_storage_engine }}
+{% if mongodb_server_version is version("6.1", "<") %}
   journal:
     enabled: {{ mongodb_storage_journal_enabled | lower }}
+{% endif %}
 {% if mongodb_storage_engine == 'mmapv1' %}
   mmapv1:
     quota:
@@ -68,7 +70,7 @@ systemLog:
 operationProfiling:
   slowOpThresholdMs: {{ mongodb_operation_profiling_slow_op_threshold_ms }}
   mode: {{ mongodb_operation_profiling_mode }}
-{% if mongodb_server_version is version("4.0", ">=") %}
+{% if mongodb_server_version is version("4.0", ">=") and mongodb_server_version is version("5.0", "<") %}
 
 cloud:
   monitoring:

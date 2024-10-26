@@ -59,10 +59,7 @@
     - mongodb
 
 - name: Install required packages
-  loop:
-    - mongodb-org
-    - numactl
-    - python3-pip
+  loop: "{{ mongodb_packages }}"
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
@@ -70,10 +67,13 @@
     - mongodb
 
 - name: Install pymongo pip
+  when:
+    - mongodb_pymongo_version | default(False)
   ansible.builtin.pip:
     name: pymongo
     state: "{{ mongodb_pymongo_version is defined | ternary('present', 'latest') }}"
     version: "{{ mongodb_pymongo_version | default(omit) }}"
+    break_system_packages: True
   tags:
     - mongodb
 

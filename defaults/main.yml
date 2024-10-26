@@ -2,9 +2,15 @@
 # @var mongodb_server_version:description: Version of MongoDB that gets installed
 mongodb_server_version: "8.0"
 
+# @var mongodb_packages:description: List of packages to install for mongodb
+mongodb_packages:
+    - mongodb-org
+    - numactl
+    - python3-pip
+    - python3-pymongo
+
 # @var mongodb_server_version:description: Version of pymongo installed via pip
-# renovate: datasource=pypi depName=pymongo
-mongodb_pymongo_version: 3.12.3
+mongodb_pymongo_version: False
 
 # @var mongodb_limit_files:description: Limit for open files for the mongod service
 mongodb_limit_files: 1048576
@@ -232,6 +238,9 @@ mongodb_user: mongodb
 
 # @var mongodb_keyring:description: Path for the repository keyring
 mongodb_keyring: /usr/share/keyrings/mongodb-{{ mongodb_server_version }}-archive-keyring.gpg
+
+# @var mongodb_numa_enabled:description: Enable if the system supports NUMA policies
+mongodb_numa_enabled: True
 
 # @var mongodb_backup_enabled:description: Enable or disable the backup script
 mongodb_backup_enabled: False

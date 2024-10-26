@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   vars:
-    mongodb_server_version: "6.0"
+    mongodb_numa_enabled: False
   roles:
     - role: rolehippie.mongodb
 
