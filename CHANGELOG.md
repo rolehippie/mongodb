@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.0](https://github.com/rolehippie/mongodb/compare/v3.2.1...v3.3.0) (2024-12-16)
+
+
+### Features
+
+* **deps:** update dependency percona/mongodb_exporter to v0.43.1 ([#37](https://github.com/rolehippie/mongodb/issues/37)) ([475cf61](https://github.com/rolehippie/mongodb/commit/475cf61bf750a5d2037b427f7796a42666246016))
+
 ## [3.2.1](https://github.com/rolehippie/mongodb/compare/v3.2.0...v3.2.1) (2024-11-18)
 
 
