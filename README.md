@@ -1,4 +1,4 @@
-# mongodb
+# workspace
 
 [![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/mongodb)
 [![General Workflow](https://github.com/rolehippie/mongodb/actions/workflows/general.yml/badge.svg)](https://github.com/rolehippie/mongodb/actions/workflows/general.yml)
@@ -263,8 +263,9 @@ Connection URI to access the MongoDB
 #### Default value
 
 ```YAML
-mongodb_exporter_connection: mongodb://{% if mongodb_security_authorization == 'enabled'
-  %}{{ mongodb_metrics_username }}:{{ mongodb_metrics_password }}@{% endif %}localhost:27017
+mongodb_exporter_connection: mongodb://{% if mongodb_security_authorization == 
+  'enabled' %}{{ mongodb_metrics_username }}:{{ mongodb_metrics_password }}@{% 
+  endif %}localhost:27017
 ```
 
 #### Example usage
@@ -280,8 +281,10 @@ URL to the archive of the release to install
 #### Default value
 
 ```YAML
-mongodb_exporter_download: https://github.com/percona/mongodb_exporter/releases/download/v{{
-  mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64.tar.gz
+mongodb_exporter_download: 
+  https://github.com/percona/mongodb_exporter/releases/download/v{{ 
+  mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version 
+  }}.linux-amd64.tar.gz
 ```
 
 ### mongodb_exporter_enabled
@@ -425,7 +428,8 @@ Path for the repository keyring
 #### Default value
 
 ```YAML
-mongodb_keyring: /usr/share/keyrings/mongodb-{{ mongodb_server_version }}-archive-keyring.gpg
+mongodb_keyring: /usr/share/keyrings/mongodb-{{ mongodb_server_version 
+  }}-archive-keyring.gpg
 ```
 
 ### mongodb_limit_files
@@ -953,7 +957,6 @@ mongodb_wiredtiger_directory_for_indexes: true
 **_mongodb_**
 
 **_mongodb-exporter_**
-
 
 ## Dependencies
 
