@@ -10,7 +10,7 @@ net:
 
 processManagement:
   fork: false
-{% if mongodb_pidfile_path | default(False) %}
+{% if mongodb_pidfile_path | default(false) %}
   pidFilePath: {{ mongodb_pidfile_path }}
 {% endif %}
 
@@ -33,7 +33,7 @@ storage:
 {% if mongodb_storage_engine == 'wiredTiger' %}
   wiredTiger:
     engineConfig:
-{% if mongodb_wiredtiger_cache_size | default(False) %}
+{% if mongodb_wiredtiger_cache_size | default(false) %}
       cacheSizeGB: {{ mongodb_wiredtiger_cache_size }}
 {% endif %}
       directoryForIndexes: {{ mongodb_wiredtiger_directory_for_indexes | lower }}

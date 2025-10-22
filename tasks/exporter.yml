@@ -1,9 +1,9 @@
 ---
 - name: Check existing install
   register: mongodb_exporter_version_check
-  failed_when: False
-  changed_when: False
-  check_mode: False
+  failed_when: false
+  changed_when: false
+  check_mode: false
   ansible.builtin.shell: /usr/bin/mongodb-exporter --version  2>&1
   tags:
     - mongodb
@@ -17,11 +17,12 @@
     - mongodb-exporter
 
 - name: Download release tarball
-  when: mongodb_exporter_version_changed
+  when:
+    - mongodb_exporter_version_changed
   ansible.builtin.unarchive:
     src: "{{ mongodb_exporter_download }}"
     dest: /usr/local/src
-    remote_src: True
+    remote_src: true
     owner: root
     group: root
   tags:
@@ -29,13 +30,15 @@
     - mongodb-exporter
 
 - name: Copy exporter binary
-  when: mongodb_exporter_version_changed and not ansible_check_mode
+  when:
+    - mongodb_exporter_version_changed
+    - not ansible_check_mode
   notify:
     - Restart mongodb-exporter
   ansible.builtin.copy:
-    src: /usr/local/src/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64/mongodb_exporter
+    src: "/usr/local/src/mongodb_exporter-{{ mongodb_exporter_version }}.linux-{{ mongodb_exporter_arch }}/mongodb_exporter"
     dest: /usr/bin/mongodb-exporter
-    remote_src: True
+    remote_src: true
     owner: root
     group: root
     mode: u=rwx,g=rx,o=rx
@@ -73,16 +76,16 @@
   ansible.builtin.systemd:
     name: mongodb-exporter
     state: "{{ 'started' if mongodb_exporter_enabled else 'stopped' }}"
-    daemon_reload: True
-    masked: False
-    enabled: "{{ True if mongodb_exporter_enabled else False }}"
+    daemon_reload: true
+    masked: false
+    enabled: "{{ true if mongodb_exporter_enabled else false }}"
   tags:
     - mongodb
     - mongodb-exporter
 
 - name: Remove install directory
   ansible.builtin.file:
-    path: /usr/local/src/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64
+    path: "/usr/local/src/mongodb_exporter-{{ mongodb_exporter_version }}.linux-{{ mongodb_exporter_arch }}"
     state: absent
   tags:
     - mongodb

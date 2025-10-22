@@ -16,15 +16,35 @@
   ansible.builtin.apt_repository:
     repo: "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_server_version }} multiverse"
     filename: mongodb
-    update_cache: False
+    update_cache: false
     state: absent
   tags:
     - mongodb
 
 - name: Download repo key
-  ansible.builtin.shell:
-    cmd: "curl -sSL 'https://www.mongodb.org/static/pgp/server-{{ mongodb_server_version }}.asc' | gpg --dearmor --output {{ mongodb_keyring }}"
-    creates: "{{ mongodb_keyring }}"
+  register: mongodb_key_download
+  ansible.builtin.get_url:
+    url: https://www.mongodb.org/static/pgp/server-{{ mongodb_server_version }}.asc
+    dest: "{{ mongodb_keyring }}.asc"
+    mode: u=rw,g=r,o=r
+    force: true
+  tags:
+    - mongodb
+
+- name: Check repo key
+  register: mongodb_key_status
+  ansible.builtin.stat:
+    path: "{{ mongodb_keyring }}"
+  tags:
+    - mongodb
+
+- name: Dearmor repo key
+  when:
+    - mongodb_key_download.changed or not mongodb_key_status.stat.exists
+  register: mongodb_key_convert
+  changed_when: mongodb_key_convert.rc == 0
+  ansible.builtin.command:
+    cmd: "gpg --dearmor -o {{ mongodb_keyring }} {{ mongodb_keyring }}.asc"
   tags:
     - mongodb
 
@@ -32,7 +52,7 @@
   ansible.builtin.apt_repository:
     repo: "deb [signed-by={{ mongodb_keyring }}] http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_server_version }} multiverse"
     filename: mongodb
-    update_cache: True
+    update_cache: true
     state: present
   tags:
     - mongodb
@@ -40,7 +60,7 @@
 - name: Create required group
   ansible.builtin.group:
     name: "{{ mongodb_group }}"
-    system: True
+    system: true
     state: present
   tags:
     - mongodb
@@ -52,8 +72,8 @@
     password: "!"
     shell: /usr/sbin/nologin
     home: /var/lib/mongodb
-    create_home: False
-    system: True
+    create_home: false
+    system: true
     state: present
   tags:
     - mongodb
@@ -68,12 +88,12 @@
 
 - name: Install pymongo pip
   when:
-    - mongodb_pymongo_version | default(False)
+    - true if mongodb_pymongo_version is none else (mongodb_pymongo_version | length > 0)
   ansible.builtin.pip:
     name: pymongo
-    state: "{{ mongodb_pymongo_version is defined | ternary('present', 'latest') }}"
+    state: "{{ mongodb_pymongo_version is not none | ternary('present', 'latest') }}"
     version: "{{ mongodb_pymongo_version | default(omit) }}"
-    break_system_packages: True
+    break_system_packages: true
   tags:
     - mongodb
 
@@ -93,7 +113,7 @@
     owner: "{{ mongodb_user }}"
     group: "{{ mongodb_user }}"
     recurse: "{{ mongodb_recursive_enforce_owner }}"
-    follow: True
+    follow: true
     mode: u=rwX,g=rX,o=
   tags:
     - mongodb
@@ -103,7 +123,7 @@
     dest: "{{ mongodb_systemlog_path | dirname }}"
     owner: "{{ mongodb_user }}"
     group: "{{ mongodb_user }}"
-    recurse: True
+    recurse: true
     mode: u=rwx,g=rx,o=rx
     state: directory
   tags:
@@ -115,7 +135,7 @@
     dest: "{{ mongodb_systemlog_path }}"
     owner: "{{ mongodb_user }}"
     group: "{{ mongodb_user }}"
-    force: False
+    force: false
     mode: u=rwx,g=rx,o=rx
   tags:
     - mongodb
@@ -154,7 +174,7 @@
   ansible.builtin.cron:
     cron_file: mongodb
     name: PATH
-    env: True
+    env: true
     job: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/X11R6/bin
     user: root
     state: present
@@ -233,7 +253,8 @@
     - mongodb
 
 - name: Write secret key
-  when: mongodb_replication_replset | default(False)
+  when:
+    - false if mongodb_replication_replset is none else (mongodb_replication_replset | length > 0)
   ansible.builtin.copy:
     content: "{{ mongodb_keyfile_content }}"
     dest: "{{ mongodb_keyfile_path }}"
@@ -247,14 +268,15 @@
   ansible.builtin.systemd:
     name: mongod
     state: started
-    daemon_reload: True
-    masked: False
-    enabled: True
+    daemon_reload: true
+    masked: false
+    enabled: true
   tags:
     - mongodb
 
 - name: Write backup script
-  when: mongodb_backup_enabled
+  when:
+    - mongodb_backup_enabled
   ansible.builtin.template:
     src: backup.j2
     dest: /usr/local/bin/mongodb-backup
@@ -265,7 +287,8 @@
     - mongodb
 
 - name: Remove backup script
-  when: not mongodb_backup_enabled
+  when:
+    - not mongodb_backup_enabled
   ansible.builtin.file:
     path: /usr/local/bin/mongodb-backup
     state: absent
@@ -297,7 +320,6 @@
   when:
     - mongodb_security_authorization == 'enabled'
     - mongodb_master_node == inventory_hostname
-  # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
   community.mongodb.mongodb_user:
     login_host: "{{ mongodb_master_node | default('localhost') }}"
@@ -316,7 +338,6 @@
   when:
     - mongodb_security_authorization == 'enabled'
     - mongodb_master_node == inventory_hostname
-  # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
   community.mongodb.mongodb_user:
     login_host: "{{ mongodb_master_node | default('localhost') }}"
@@ -338,7 +359,6 @@
   when:
     - mongodb_security_authorization == 'enabled'
     - mongodb_master_node == inventory_hostname
-  # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
   community.mongodb.mongodb_user:
     login_host: "{{ mongodb_master_node | default('localhost') }}"
@@ -362,7 +382,6 @@
   when:
     - mongodb_security_authorization == 'enabled'
     - mongodb_master_node == inventory_hostname
-  # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
   community.mongodb.mongodb_user:
     login_host: "{{ mongodb_master_node | default('localhost') }}"
@@ -378,7 +397,8 @@
     - mongodb
 
 - name: Include exporter tasks
-  when: mongodb_exporter_enabled | default(False)
+  when:
+    - mongodb_exporter_enabled
   ansible.builtin.include_tasks: exporter.yml
   tags:
     - mongodb

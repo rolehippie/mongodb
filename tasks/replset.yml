@@ -4,9 +4,9 @@
     - mongodb_security_authorization == 'enabled'
   register: mongodb_user_admin_check
   changed_when: mongodb_user_admin_check.rc != 0
-  failed_when: False
-  check_mode: False
-  ignore_errors: True
+  failed_when: false
+  check_mode: false
+  ignore_errors: true
   ansible.builtin.command: >
     mongo --quiet
       --username {{ mongodb_root_admin_username }}
@@ -41,7 +41,7 @@
     host_name: "{{ item.host }}"
     host_port: "{{ item.port | default(27017) }}"
     host_type: "{{ item.type | default('replica') }}"
-    hidden: "{{ item.hidden | default(False) }}"
+    hidden: "{{ item.hidden | default(false) }}"
     priority: "{{ item.priority | default(1.0) }}"
     votes: "{{ item.votes | default(omit) }}"
     state: "{{ item.state | default('present') }}"
@@ -62,7 +62,7 @@
     host_name: "{{ item.host }}"
     host_port: "{{ item.port | default(27017) }}"
     host_type: "{{ item.type | default('replica') }}"
-    hidden: "{{ item.hidden | default(False) }}"
+    hidden: "{{ item.hidden | default(false) }}"
     priority: "{{ item.priority | default(1.0) }}"
     votes: "{{ item.votes | default(omit) }}"
     state: "{{ item.state | default('present') }}"

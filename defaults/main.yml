@@ -10,7 +10,7 @@ mongodb_packages:
     - python3-pymongo
 
 # @var mongodb_server_version:description: Version of pymongo installed via pip
-mongodb_pymongo_version: False
+mongodb_pymongo_version:
 
 # @var mongodb_limit_files:description: Limit for open files for the mongod service
 mongodb_limit_files: 1048576
@@ -25,10 +25,10 @@ mongodb_net_bindip: 127.0.0.1
 mongodb_net_port: 27017
 
 # @var mongodb_net_http_enabled:description: Enable HTTP interface
-mongodb_net_http_enabled: False
+mongodb_net_http_enabled: false
 
 # @var mongodb_net_ipv6:description: Enable IPv6 support
-mongodb_net_ipv6: False
+mongodb_net_ipv6: false
 
 # @var mongodb_net_maxconns:description: Max number of simultaneous connections
 mongodb_net_maxconns: 51200
@@ -133,7 +133,7 @@ mongodb_keyfile_content: |
 mongodb_security_authorization: disabled
 
 # @var mongodb_security_javascript_enabled:description: Enable javascript integration
-mongodb_security_javascript_enabled: False
+mongodb_security_javascript_enabled: false
 
 # @var mongodb_master_node:description: Define the inventory name of the master node, used for users and replset init
 mongodb_master_node:
@@ -148,7 +148,7 @@ mongodb_replication_replindexprefetch: all
 mongodb_replication_oplogsize: 1024
 
 # @var mongodb_replication_enable_majority_read_concern:description: Enable or disable majority read concern, should be false for PSA
-mongodb_replication_enable_majority_read_concern: True
+mongodb_replication_enable_majority_read_concern: true
 
 # @var mongodb_replication_params:description: Replication host configuration or parameters
 # @var mongodb_replication_params:example: >
@@ -166,13 +166,13 @@ mongodb_replication_enable_majority_read_concern: True
 mongodb_replication_params:
 
 # @var mongodb_recursive_enforce_owner:description: Enforce recursively data ownership
-mongodb_recursive_enforce_owner: False
+mongodb_recursive_enforce_owner: false
 
 # @var mongodb_systemlog_path:description: Path to the logging file
 mongodb_systemlog_path: /var/log/mongodb/mongod.log
 
 # @var mongodb_systemlog_logappend:description: Append to the logging file
-mongodb_systemlog_logappend: True
+mongodb_systemlog_logappend: true
 
 # @var mongodb_systemlog_logrotate:description: Mechanism to rotate the log file
 mongodb_systemlog_logrotate: reopen
@@ -184,19 +184,19 @@ mongodb_storage_path: /var/lib/mongodb
 mongodb_storage_engine: wiredTiger
 
 # @var mongodb_storage_dirperdb:description: Use one directory per database
-mongodb_storage_dirperdb: False
+mongodb_storage_dirperdb: false
 
 # @var mongodb_storage_journal_enabled:description: Enable journaling
-mongodb_storage_journal_enabled: True
+mongodb_storage_journal_enabled: true
 
 # @var mongodb_storage_quota_enforced:description: Limit each database to a certain number of files
-mongodb_storage_quota_enforced: False
+mongodb_storage_quota_enforced: false
 
 # @var mongodb_storage_quota_maxfiles:description: Number of quota files per database
 mongodb_storage_quota_maxfiles: 8
 
 # @var mongodb_storage_smallfiles:description: Very useful for non-data nodes
-mongodb_storage_smallfiles: False
+mongodb_storage_smallfiles: false
 
 # @var mongodb_pidfile_path:description: Path to the pid file
 mongodb_pidfile_path: /run/mongodb/mongod.pid
@@ -205,7 +205,7 @@ mongodb_pidfile_path: /run/mongodb/mongod.pid
 mongodb_wiredtiger_cache_size:
 
 # @var mongodb_wiredtiger_directory_for_indexes:description: Directory per index for wiredtiger engine
-mongodb_wiredtiger_directory_for_indexes: True
+mongodb_wiredtiger_directory_for_indexes: true
 
 # @var mongodb_wirdtiger_config_string:description: Config String for the wiredtiger engine
 mongodb_wiredtiger_config_string:
@@ -240,10 +240,10 @@ mongodb_user: mongodb
 mongodb_keyring: /usr/share/keyrings/mongodb-{{ mongodb_server_version }}-archive-keyring.gpg
 
 # @var mongodb_numa_enabled:description: Enable if the system supports NUMA policies
-mongodb_numa_enabled: True
+mongodb_numa_enabled: true
 
 # @var mongodb_backup_enabled:description: Enable or disable the backup script
-mongodb_backup_enabled: False
+mongodb_backup_enabled: false
 
 # @var mongodb_backup_path:description: Path to store the backups
 mongodb_backup_path: "{{ mongodb_storage_path }}/_backup"
@@ -264,14 +264,17 @@ mongodb_backup_ignore: (admin|local)
 mongodb_backup_formatting: "%F"
 
 # @var mongodb_exporter_enabled:description: Enable the mongodb exporter
-mongodb_exporter_enabled: True
+mongodb_exporter_enabled: true
 
 # @var mongodb_exporter_version:description: Version of the release to install
 # renovate: datasource=github-releases depName=percona/mongodb_exporter
 mongodb_exporter_version: 0.47.1
 
+# @var mongodb_exporter_arch:description: Target system architecture of the binary
+mongodb_exporter_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' or ansible_architecture == 'arm64' else 'amd64' }}"
+
 # @var mongodb_exporter_download:description: URL to the archive of the release to install
-mongodb_exporter_download: "https://github.com/percona/mongodb_exporter/releases/download/v{{ mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64.tar.gz"
+mongodb_exporter_download: "https://github.com/percona/mongodb_exporter/releases/download/v{{ mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version }}.linux-{{ mongodb_exporter_arch }}.tar.gz"
 
 # @var mongodb_exporter_connection:description: Connection URI to access the MongoDB
 # @var mongodb_exporter_connection:example: $ "mongodb://localhost:27017"
@@ -284,19 +287,19 @@ mongodb_exporter_username:
 mongodb_exporter_password:
 
 # @var mongodb_exporter_collect_database:description: Enable collector for replicasets
-mongodb_exporter_collect_replicaset: True
+mongodb_exporter_collect_replicaset: true
 
 # @var mongodb_exporter_collect_database:description: Enable collector for databases
-mongodb_exporter_collect_database: True
+mongodb_exporter_collect_database: true
 
 # @var mongodb_exporter_collect_topmetrics:description: Enable collector for top metrics
-mongodb_exporter_collect_topmetrics: True
+mongodb_exporter_collect_topmetrics: true
 
 # @var mongodb_exporter_collect_indexusage:description: Enable collector for index usage
-mongodb_exporter_collect_indexusage: False
+mongodb_exporter_collect_indexusage: false
 
 # @var mongodb_exporter_collect_collection:description: Enable collector for collections
-mongodb_exporter_collect_collection: False
+mongodb_exporter_collect_collection: false
 
 # @var mongodb_exporter_args:description: List of arguments joined for the executable
 mongodb_exporter_args: []

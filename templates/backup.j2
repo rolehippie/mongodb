@@ -33,7 +33,7 @@ do
     ENDS=$(date +%s)
     echo "Done within $((${ENDS}-${START}))s"
 done
-{% if mongodb_backup_addition_script | default(False) %}
+{% if mongodb_backup_addition_script | default(false) %}
 
 echo "Executing additional scripts..."
 START=$(date +%s)

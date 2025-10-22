@@ -155,9 +155,9 @@ try:
     from pymongo import version as PyMongoVersion
     from pymongo import MongoClient
 except ImportError:
-    pymongo_found = False
+    pymongo_found = false
 else:
-    pymongo_found = True
+    pymongo_found = true
 
 # =========================================
 # MongoDB module specific support methods.
@@ -187,21 +187,21 @@ def check_members(state, module, client, host_name, host_port, host_type):
         if state == 'present':
             if host_type == 'replica':
                 if "{0}:{1}".format(host_name, host_port) in member['host']:
-                    module.exit_json(changed=False, host_name=host_name, host_port=host_port, host_type=host_type)
+                    module.exit_json(changed=false, host_name=host_name, host_port=host_port, host_type=host_type)
             else:
                 if "{0}:{1}".format(host_name, host_port) in member['host'] and member['arbiterOnly']:
-                    module.exit_json(changed=False, host_name=host_name, host_port=host_port, host_type=host_type)
+                    module.exit_json(changed=false, host_name=host_name, host_port=host_port, host_type=host_type)
         else:
             if host_type == 'replica':
                 if "{0}:{1}".format(host_name, host_port) not in member['host']:
-                    module.exit_json(changed=False, host_name=host_name, host_port=host_port, host_type=host_type)
+                    module.exit_json(changed=false, host_name=host_name, host_port=host_port, host_type=host_type)
             else:
                 if "{0}:{1}".format(host_name, host_port) not in member['host'] and member['arbiterOnly']:
-                    module.exit_json(changed=False, host_name=host_name, host_port=host_port, host_type=host_type)
+                    module.exit_json(changed=false, host_name=host_name, host_port=host_port, host_type=host_type)
 
 def add_host(module, client, host_name, host_port, host_type, timeout=180, **kwargs):
     start_time = dtdatetime.now()
-    while True:
+    while true:
         try:
             admin_db = client['admin']
             local_db = client['local']
@@ -217,13 +217,13 @@ def add_host(module, client, host_name, host_port, host_type, timeout=180, **kwa
             max_id = max(cfg['members'], key=lambda x:x['_id'])
             new_host = { '_id': max_id['_id'] + 1, 'host': "{0}:{1}".format(host_name, host_port) }
             if host_type == 'arbiter':
-                new_host['arbiterOnly'] = True
+                new_host['arbiterOnly'] = true
 
             if not kwargs['build_indexes']:
-                new_host['buildIndexes'] = False
+                new_host['buildIndexes'] = false
 
             if kwargs['hidden']:
-                new_host['hidden'] = True
+                new_host['hidden'] = true
 
             if kwargs['priority'] != 1.0:
                 new_host['priority'] = kwargs['priority']
@@ -244,7 +244,7 @@ def add_host(module, client, host_name, host_port, host_type, timeout=180, **kwa
 
 def remove_host(module, client, host_name, timeout=180):
     start_time = dtdatetime.now()
-    while True:
+    while true:
         try:
             admin_db = client['admin']
             local_db = client['local']
@@ -273,12 +273,12 @@ def remove_host(module, client, host_name, timeout=180):
 
 def wait_for_ok_and_master(module, connection_params, timeout = 180):
     start_time = dtdatetime.now()
-    while True:
+    while true:
         try:
             client = MongoClient(**connection_params)
             authenticate(client, connection_params["username"], connection_params["password"])
 
-            status = client.admin.command('replSetGetStatus', check=False)
+            status = client.admin.command('replSetGetStatus', check=false)
             if status['ok'] == 1 and status['myState'] == 1:
                 return
 
@@ -306,7 +306,7 @@ def main():
             login_host=dict(default='localhost'),
             login_port=dict(default='27017'),
             login_user=dict(default=None),
-            login_password=dict(default=None, no_log=True),
+            login_password=dict(default=None, no_log=true),
             login_database=dict(default='admin'),
             replica_set=dict(default=None),
             host_name=dict(default='localhost'),
@@ -336,7 +336,7 @@ def main():
     state = module.params['state']
     priority = float(module.params['priority'])
 
-    replica_set_created = False
+    replica_set_created = false
 
     try:
         if replica_set is None:
@@ -376,8 +376,8 @@ def main():
                 client['admin'].command('replSetInitiate', config)
                 client.close()
                 wait_for_ok_and_master(module, connection_params)
-                replica_set_created = True
-                module.exit_json(changed=True, host_name=host_name, host_port=host_port, host_type=host_type)
+                replica_set_created = true
+                module.exit_json(changed=true, host_name=host_name, host_port=host_port, host_type=host_type)
         except OperationFailure as e:
             module.fail_json(msg='Unable to initiate replica set: %s' % str(e))
     except ConnectionFailure as e:
@@ -410,7 +410,7 @@ def main():
         except OperationFailure as e:
             module.fail_json(msg='Unable to remove member of replica set: %s' % str(e))
 
-    module.exit_json(changed=True, host_name=host_name, host_port=host_port, host_type=host_type)
+    module.exit_json(changed=true, host_name=host_name, host_port=host_port, host_type=host_type)
 
 # import module snippets
 from ansible.module_utils.basic import *

@@ -29,10 +29,14 @@ galaxy_info:
       versions:
         - focal
         - jammy
+        - noble
   galaxy_tags:
     - mongo
     - cluster
 
 dependencies: []
+
+collections:
+  - community.mongodb
 
 ...

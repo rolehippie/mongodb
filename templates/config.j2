@@ -10,13 +10,13 @@ net:
 
 processManagement:
   fork: false
-{% if mongodb_pidfile_path | default(False) %}
+{% if mongodb_pidfile_path | default(false) %}
   pidFilePath: {{ mongodb_pidfile_path }}
 {% endif %}
 {% if mongodb_server_version is version("3.4", ">") %}
   timeZoneInfo: /usr/share/zoneinfo
 {% endif %}
-{% if mongodb_replication_replset | default(False) %}
+{% if mongodb_replication_replset | default(false) %}
 
 replication:
   oplogSizeMB: {{ mongodb_replication_oplogsize | int }}
@@ -29,7 +29,7 @@ replication:
 
 security:
   authorization: {{ mongodb_security_authorization }}
-{% if mongodb_replication_replset | default(False) and mongodb_security_authorization == 'enabled' %}
+{% if mongodb_replication_replset | default(false) and mongodb_security_authorization == 'enabled' %}
   keyFile: {{ mongodb_keyfile_path }}
 {% endif %}
   javascriptEnabled: {{ mongodb_security_javascript_enabled | lower }}
@@ -52,11 +52,11 @@ storage:
 {% if mongodb_storage_engine == 'wiredTiger' %}
   wiredTiger:
     engineConfig:
-{% if mongodb_wiredtiger_cache_size | default(False) %}
+{% if mongodb_wiredtiger_cache_size | default(false) %}
       cacheSizeGB: {{ mongodb_wiredtiger_cache_size }}
 {% endif %}
       directoryForIndexes: {{ mongodb_wiredtiger_directory_for_indexes | lower }}
-{% if mongodb_wiredtiger_config_string | default(False) %}
+{% if mongodb_wiredtiger_config_string | default(false) %}
       configString: "{{ mongodb_wiredtiger_config_string }}"
 {% endif %}
 {% endif %}
@@ -77,7 +77,7 @@ cloud:
     free:
       state: {{ mongodb_cloud_monitoring_free_state }}
 {% endif %}
-{% if mongodb_set_parameters | default(False) %}
+{% if mongodb_set_parameters | default(false) %}
 
 setParameter:
 {% for key, value in mongodb_set_parameters.items() %}

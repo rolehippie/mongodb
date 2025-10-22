@@ -2,7 +2,7 @@
 - name: Replace mongod config
   notify:
     - Restart mongodb
-  diff: False
+  diff: false
   ansible.builtin.template:
     src: init.j2
     dest: /etc/mongod.conf
@@ -27,7 +27,6 @@
     - mongodb
 
 - name: Create root user
-  # no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
   community.mongodb.mongodb_user:
     database: admin
@@ -42,7 +41,7 @@
 - name: Revert mongod config
   notify:
     - Restart mongodb
-  diff: False
+  diff: false
   ansible.builtin.template:
     src: config.j2
     dest: /etc/mongod.conf

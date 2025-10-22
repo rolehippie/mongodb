@@ -1,4 +1,4 @@
-# workspace
+# mongodb
 
 [![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/mongodb)
 [![General Workflow](https://github.com/rolehippie/mongodb/actions/workflows/general.yml/badge.svg)](https://github.com/rolehippie/mongodb/actions/workflows/general.yml)
@@ -26,6 +26,7 @@ Building and improving this Ansible role have been sponsored by my current and p
   - [mongodb_backup_path](#mongodb_backup_path)
   - [mongodb_backup_retention](#mongodb_backup_retention)
   - [mongodb_cloud_monitoring_free_state](#mongodb_cloud_monitoring_free_state)
+  - [mongodb_exporter_arch](#mongodb_exporter_arch)
   - [mongodb_exporter_args](#mongodb_exporter_args)
   - [mongodb_exporter_collect_collection](#mongodb_exporter_collect_collection)
   - [mongodb_exporter_collect_database](#mongodb_exporter_collect_database)
@@ -198,6 +199,17 @@ Define parameters for mongod config
 mongodb_cloud_monitoring_free_state: off
 ```
 
+### mongodb_exporter_arch
+
+Target system architecture of the binary
+
+#### Default value
+
+```YAML
+mongodb_exporter_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' or ansible_architecture
+  == 'arm64' else 'amd64' }}"
+```
+
 ### mongodb_exporter_args
 
 List of arguments joined for the executable
@@ -284,7 +296,7 @@ URL to the archive of the release to install
 mongodb_exporter_download: 
   https://github.com/percona/mongodb_exporter/releases/download/v{{ 
   mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version 
-  }}.linux-amd64.tar.gz
+  }}.linux-{{ mongodb_exporter_arch }}.tar.gz
 ```
 
 ### mongodb_exporter_enabled
@@ -628,7 +640,7 @@ mongodb_pidfile_path: /run/mongodb/mongod.pid
 #### Default value
 
 ```YAML
-mongodb_pymongo_version: false
+mongodb_pymongo_version:
 ```
 
 ### mongodb_recursive_enforce_owner
