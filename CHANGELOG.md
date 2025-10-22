@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.6.0](https://github.com/rolehippie/mongodb/compare/v3.5.1...v3.6.0) (2025-10-22)
+
+
+### Features
+
+* apply new repo structure and update linting ([4d94562](https://github.com/rolehippie/mongodb/commit/4d94562c9e4d50b620836e4da57a8f7045f0106d))
+
 ## [3.5.1](https://github.com/rolehippie/mongodb/compare/v3.5.0...v3.5.1) (2025-09-08)
 
 
