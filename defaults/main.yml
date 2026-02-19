@@ -268,7 +268,7 @@ mongodb_exporter_enabled: true
 
 # @var mongodb_exporter_version:description: Version of the release to install
 # renovate: datasource=github-releases depName=percona/mongodb_exporter
-mongodb_exporter_version: 0.47.2
+mongodb_exporter_version: 0.49.0
 
 # @var mongodb_exporter_arch:description: Target system architecture of the binary
 mongodb_exporter_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' or ansible_architecture == 'arm64' else 'amd64' }}"
