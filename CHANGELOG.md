@@ -1,5 +1,27 @@
 # Changelog
 
+## [3.7.0](https://github.com/rolehippie/mongodb/compare/v3.6.1...v3.7.0) (2026-03-02)
+
+### Dependencies
+
+* **minor:** update dependency percona/mongodb_exporter to v0.49.0 ([#66](https://github.com/rolehippie/mongodb/issues/66)) ([a79c750](https://github.com/rolehippie/mongodb/commit/a79c7502b6e938910815270a97fe6b1d526bca99))
+
+### Miscellaneous
+
+* **flake:** updated lockfile [skip ci] ([24c9a87](https://github.com/rolehippie/mongodb/commit/24c9a875ff7ef76417f4bad34e2d10145ff18d92))
+* **flake:** updated lockfile [skip ci] ([12b9629](https://github.com/rolehippie/mongodb/commit/12b962957fbd55e816aa685a228eb7fdf5166dbb))
+* **flake:** updated lockfile [skip ci] ([f8a29cf](https://github.com/rolehippie/mongodb/commit/f8a29cfc5a5eee82d603548135536f4b63559221))
+* **flake:** updated lockfile [skip ci] ([a1bdbbc](https://github.com/rolehippie/mongodb/commit/a1bdbbce04e713dc1b94ff1f448d4bcae429f416))
+* **flake:** updated lockfile [skip ci] ([eec971f](https://github.com/rolehippie/mongodb/commit/eec971f80a70410d18c91381349769447e879d25))
+* **flake:** updated lockfile [skip ci] ([7ccd2d6](https://github.com/rolehippie/mongodb/commit/7ccd2d6c55f8b2b20c7457f1f806de2116d9d081))
+* **flake:** updated lockfile [skip ci] ([e55288f](https://github.com/rolehippie/mongodb/commit/e55288f329d232b5669ae344adaad63cf893a017))
+* **flake:** updated lockfile [skip ci] ([41c60e6](https://github.com/rolehippie/mongodb/commit/41c60e639f88d0e77b940cac8719babf7d285cfb))
+* **flake:** updated lockfile [skip ci] ([a43834e](https://github.com/rolehippie/mongodb/commit/a43834eaf4921a522654bf39650363f6e9f7a619))
+* **flake:** updated lockfile [skip ci] ([cff04bb](https://github.com/rolehippie/mongodb/commit/cff04bb6525c0a590fafe0e587e850c22c98dcf3))
+* **flake:** updated lockfile [skip ci] ([840eb97](https://github.com/rolehippie/mongodb/commit/840eb977b61db92ce7815028e35da3501d2dde6f))
+* **flake:** updated lockfile [skip ci] ([6aa857a](https://github.com/rolehippie/mongodb/commit/6aa857ad1543736442c0eb6d6a605eb623d6899b))
+* **flake:** updated lockfile [skip ci] ([7a7bc8f](https://github.com/rolehippie/mongodb/commit/7a7bc8fb67e1f2c8636af2c055d6a2b236a9e0af))
+
 ## [3.6.1](https://github.com/rolehippie/mongodb/compare/v3.6.0...v3.6.1) (2025-12-01)
 
 
