@@ -206,8 +206,7 @@ Target system architecture of the binary
 #### Default value
 
 ```YAML
-mongodb_exporter_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' or ansible_architecture
-  == 'arm64' else 'amd64' }}"
+mongodb_exporter_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' or ansible_architecture == 'arm64' else 'amd64' }}"
 ```
 
 ### mongodb_exporter_args
@@ -275,9 +274,7 @@ Connection URI to access the MongoDB
 #### Default value
 
 ```YAML
-mongodb_exporter_connection: mongodb://{% if mongodb_security_authorization == 
-  'enabled' %}{{ mongodb_metrics_username }}:{{ mongodb_metrics_password }}@{% 
-  endif %}localhost:27017
+mongodb_exporter_connection: mongodb://{% if mongodb_security_authorization == 'enabled' %}{{ mongodb_metrics_username }}:{{ mongodb_metrics_password }}@{% endif %}localhost:27017
 ```
 
 #### Example usage
@@ -293,10 +290,7 @@ URL to the archive of the release to install
 #### Default value
 
 ```YAML
-mongodb_exporter_download: 
-  https://github.com/percona/mongodb_exporter/releases/download/v{{ 
-  mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version 
-  }}.linux-{{ mongodb_exporter_arch }}.tar.gz
+mongodb_exporter_download: https://github.com/percona/mongodb_exporter/releases/download/v{{ mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version }}.linux-{{ mongodb_exporter_arch }}.tar.gz
 ```
 
 ### mongodb_exporter_enabled
@@ -334,7 +328,7 @@ Version of the release to install
 #### Default value
 
 ```YAML
-mongodb_exporter_version: 0.49.0
+mongodb_exporter_version: 0.50.0
 ```
 
 ### mongodb_extra_users
@@ -440,8 +434,7 @@ Path for the repository keyring
 #### Default value
 
 ```YAML
-mongodb_keyring: /usr/share/keyrings/mongodb-{{ mongodb_server_version 
-  }}-archive-keyring.gpg
+mongodb_keyring: /usr/share/keyrings/mongodb-{{ mongodb_server_version }}-archive-keyring.gpg
 ```
 
 ### mongodb_limit_files
