@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.9.0](https://github.com/rolehippie/mongodb/compare/v3.8.0...v3.9.0) (2026-05-04)
+
+### Dependencies
+
+* **minor:** update dependency percona/mongodb_exporter to v0.51.0 ([#71](https://github.com/rolehippie/mongodb/issues/71)) ([512500d](https://github.com/rolehippie/mongodb/commit/512500dd3c8be64c8fc5ec5e158f8f35d7e76b74))
+
+### Miscellaneous
+
+* **flake:** updated lockfile [skip ci] ([bdbe798](https://github.com/rolehippie/mongodb/commit/bdbe7986c4c26b695d3df212b3ca3bed7099455d))
+* **flake:** updated lockfile [skip ci] ([00df954](https://github.com/rolehippie/mongodb/commit/00df954c6ab30b6745d98e0e21d9bb250ceeac5b))
+* **flake:** updated lockfile [skip ci] ([c9bdf00](https://github.com/rolehippie/mongodb/commit/c9bdf00fd8179aeb2f832f7c431d07987f814532))
+
 ## [3.8.0](https://github.com/rolehippie/mongodb/compare/v3.7.0...v3.8.0) (2026-04-13)
 
 ### Dependencies
