@@ -1,5 +1,7 @@
 # Changelog
 
+## [3.10.0](https://github.com/rolehippie/mongodb/compare/v3.9.0...v3.10.0) (2026-07-27)
+
 ## [3.9.0](https://github.com/rolehippie/mongodb/compare/v3.8.0...v3.9.0) (2026-05-04)
 
 ### Dependencies
