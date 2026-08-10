@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.12.0](https://github.com/rolehippie/mongodb/compare/v3.11.0...v3.12.0) (2026-08-10)
+
+### Dependencies
+
+* **minor:** update dependency pipx:ansible-doctor to v8.4.0 ([#78](https://github.com/rolehippie/mongodb/issues/78)) ([45f42b7](https://github.com/rolehippie/mongodb/commit/45f42b77fa27eea3df495ff12070088dfe4af4f6))
+* **patch:** update dependency python to v3.14.7 ([#76](https://github.com/rolehippie/mongodb/issues/76)) ([921eccc](https://github.com/rolehippie/mongodb/commit/921ecccf60a4c1879caa26f90383b70070b5eeb2))
+
 ## [3.11.0](https://github.com/rolehippie/mongodb/compare/v3.10.0...v3.11.0) (2026-08-03)
 
 ### Dependencies
