@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.13.0](https://github.com/rolehippie/mongodb/compare/v3.12.0...v3.13.0) (2026-08-17)
+
+### Dependencies
+
+* **minor:** update dependency pipx:ansible-lint to v26.8.0 ([#81](https://github.com/rolehippie/mongodb/issues/81)) ([952ef6a](https://github.com/rolehippie/mongodb/commit/952ef6ac7df2ca3b0b6a2c7a7ca1046bc1b1bea1))
+* **patch:** update dependency pipx:ansible-core to v2.21.3 ([#79](https://github.com/rolehippie/mongodb/issues/79)) ([b49ad9f](https://github.com/rolehippie/mongodb/commit/b49ad9f084079b85632e9c91641959578e113374))
+* **patch:** update dependency pre-commit to v4.6.2 ([#80](https://github.com/rolehippie/mongodb/issues/80)) ([803fec1](https://github.com/rolehippie/mongodb/commit/803fec1fa587e60be00bff925c5924573782c835))
+
 ## [3.12.0](https://github.com/rolehippie/mongodb/compare/v3.11.0...v3.12.0) (2026-08-10)
 
 ### Dependencies
