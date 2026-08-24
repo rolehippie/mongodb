@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.14.0](https://github.com/rolehippie/mongodb/compare/v3.13.0...v3.14.0) (2026-08-24)
+
+### Dependencies
+
+* **minor:** update dependency percona/mongodb_exporter to v0.53.0 ([#83](https://github.com/rolehippie/mongodb/issues/83)) ([798c9f5](https://github.com/rolehippie/mongodb/commit/798c9f52ef092a1931bffe193e2bc17c3b54969a))
+* **minor:** update dependency pipx:molecule to v26.8.0 ([#82](https://github.com/rolehippie/mongodb/issues/82)) ([fbf356e](https://github.com/rolehippie/mongodb/commit/fbf356ebbd237f3f144583653d1db862e185831f))
+
 ## [3.13.0](https://github.com/rolehippie/mongodb/compare/v3.12.0...v3.13.0) (2026-08-17)
 
 ### Dependencies
