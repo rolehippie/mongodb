@@ -271,7 +271,7 @@ mongodb_exporter_enabled: true
 mongodb_exporter_version: 0.53.0
 
 # @var mongodb_exporter_arch:description: Target system architecture of the binary
-mongodb_exporter_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' or ansible_architecture == 'arm64' else 'amd64' }}"
+mongodb_exporter_arch: "{{ 'arm64' if ansible_facts['architecture'] in ['aarch64', 'arm64'] else 'amd64' }}"
 
 # @var mongodb_exporter_download:description: URL to the archive of the release to install
 mongodb_exporter_download: "https://github.com/percona/mongodb_exporter/releases/download/v{{ mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version }}.linux-{{ mongodb_exporter_arch }}.tar.gz"

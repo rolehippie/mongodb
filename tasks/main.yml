@@ -14,7 +14,7 @@
 
 - name: Remove legacy repo
   ansible.builtin.apt_repository:
-    repo: "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_server_version }} multiverse"
+    repo: "deb http://repo.mongodb.org/apt/ubuntu {{ ansible_facts['distribution_release'] }}/mongodb-org/{{ mongodb_server_version }} multiverse"
     filename: mongodb
     update_cache: false
     state: absent
@@ -44,13 +44,13 @@
   register: mongodb_key_convert
   changed_when: mongodb_key_convert.rc == 0
   ansible.builtin.command:
-    cmd: "gpg --dearmor -o {{ mongodb_keyring }} {{ mongodb_keyring }}.asc"
+    cmd: "gpg --batch --yes --dearmor -o {{ mongodb_keyring }} {{ mongodb_keyring }}.asc"
   tags:
     - mongodb
 
 - name: Add apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by={{ mongodb_keyring }}] http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_server_version }} multiverse"
+    repo: "deb [signed-by={{ mongodb_keyring }}] http://repo.mongodb.org/apt/ubuntu {{ ansible_facts['distribution_release'] }}/mongodb-org/{{ mongodb_server_version }} multiverse"
     filename: mongodb
     update_cache: true
     state: present
