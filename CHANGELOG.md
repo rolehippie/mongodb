@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.15.0](https://github.com/rolehippie/mongodb/compare/v3.14.1...v3.15.0) (2026-09-07)
+
+### Features
+
+* add separate requirements for molecule run ([9da14ac](https://github.com/rolehippie/mongodb/commit/9da14ac3a08e394e5e55bde2bdf291ae81cb47c3))
+* use new required facts as attributes ([b53d90b](https://github.com/rolehippie/mongodb/commit/b53d90be66ed32fa01b9528fdd82dff938e5e6f2))
+
 ## [3.14.1](https://github.com/rolehippie/mongodb/compare/v3.14.0...v3.14.1) (2026-08-31)
 
 ### Dependencies
