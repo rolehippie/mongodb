@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.16.0](https://github.com/rolehippie/mongodb/compare/v3.15.0...v3.16.0) (2026-10-26)
+
+### Dependencies
+
+* **minor:** update dependency percona/mongodb_exporter to v0.54.0 ([#100](https://github.com/rolehippie/mongodb/issues/100)) ([ac32f4d](https://github.com/rolehippie/mongodb/commit/ac32f4d1ac1bd7a770bdcc30521d17f42a7cc177))
+* **mise:** update dependency pipx:ansible-core to v2.21.4 ([#85](https://github.com/rolehippie/mongodb/issues/85)) ([a717359](https://github.com/rolehippie/mongodb/commit/a71735911fda4a0faec3ad9a5405e73667956ef9))
+* **mise:** update dependency pipx:ansible-core to v2.21.5 ([#93](https://github.com/rolehippie/mongodb/issues/93)) ([2e87752](https://github.com/rolehippie/mongodb/commit/2e8775294286b9c611d90d18b69d0614b4104a37))
+* **mise:** update dependency pipx:ansible-doctor to v8.4.2 ([#87](https://github.com/rolehippie/mongodb/issues/87)) ([2de9bb6](https://github.com/rolehippie/mongodb/commit/2de9bb63c2c89d39eb3316cd8025c8add366bf8c))
+* **mise:** update dependency pipx:ansible-doctor to v8.4.3 ([#94](https://github.com/rolehippie/mongodb/issues/94)) ([4bb97ef](https://github.com/rolehippie/mongodb/commit/4bb97ef4ab8bf398ce081f457f9cce3abebac5ee))
+* **mise:** update dependency pipx:ansible-lint to v26.10.0 ([#95](https://github.com/rolehippie/mongodb/issues/95)) ([013a2f8](https://github.com/rolehippie/mongodb/commit/013a2f8f5a319566302db8eb1d0b8534a7dbafd9))
+* **mise:** update dependency pipx:ansible-lint to v26.10.1 ([#97](https://github.com/rolehippie/mongodb/issues/97)) ([092f7f2](https://github.com/rolehippie/mongodb/commit/092f7f2674af2422a7f584ba57bd595362397fcd))
+* **mise:** update dependency pipx:ansible-lint to v26.9.0 ([#88](https://github.com/rolehippie/mongodb/issues/88)) ([4eca6e7](https://github.com/rolehippie/mongodb/commit/4eca6e70d65e3971439c9c8689ec26c61f874064))
+* **mise:** update dependency pipx:molecule to v26.10.0 ([#96](https://github.com/rolehippie/mongodb/issues/96)) ([68a19f2](https://github.com/rolehippie/mongodb/commit/68a19f25975b64cfb5013aab9c94ec76d942645e))
+* **mise:** update dependency pipx:molecule to v26.9.0 ([#89](https://github.com/rolehippie/mongodb/issues/89)) ([0a43bc9](https://github.com/rolehippie/mongodb/commit/0a43bc9772cbda72865969dbd54d67061df5fda1))
+* **mise:** update dependency prek to v0.5.3 ([#86](https://github.com/rolehippie/mongodb/issues/86)) ([387d40b](https://github.com/rolehippie/mongodb/commit/387d40b66124131b5f3cfe5083ff2282cbef9851))
+* **mise:** update dependency prek to v0.5.4 ([#90](https://github.com/rolehippie/mongodb/issues/90)) ([7d12cbf](https://github.com/rolehippie/mongodb/commit/7d12cbfb9068da53cbf19d7a90994312f45c4c43))
+* **mise:** update dependency prek to v0.5.5 ([#92](https://github.com/rolehippie/mongodb/issues/92)) ([0b646ea](https://github.com/rolehippie/mongodb/commit/0b646ea9a827deb1e877592ead20d013b944c144))
+* **mise:** update dependency prek to v0.5.6 ([#98](https://github.com/rolehippie/mongodb/issues/98)) ([ad371c3](https://github.com/rolehippie/mongodb/commit/ad371c3489e35f332c285037662813a52164b184))
+* **mise:** update dependency prek to v0.5.7 ([#99](https://github.com/rolehippie/mongodb/issues/99)) ([40d75a7](https://github.com/rolehippie/mongodb/commit/40d75a7f1376ee923c7392a969f0d80f277ba083))
+
 ## [3.15.0](https://github.com/rolehippie/mongodb/compare/v3.14.1...v3.15.0) (2026-09-07)
 
 ### Features
